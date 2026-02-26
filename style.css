@@ -1,17 +1,19 @@
 * {
     margin: 0;
     padding: 0;
+    /* color: #666B6F;
+    color: #94A8DD;
+    color: #BDE8CC; */
 }
 
 body {
-    background-color: rebeccapurple;
+    background-color: #BDE8CC;
 }
 
 header {
     position: fixed;
     top: 0;
     left: 0;
-    border-right: 1px solid black;
     height: 100%;
     background: linear-gradient(rgba(0, 0, 0, 0.3));
 }
@@ -46,4 +48,53 @@ a {
 
 #app {
     padding-top: 30px;
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    border: 1px solid darkslategreyck;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 7px 0 darkslategrey;
+}
+
+.tasksBlock{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.task {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 1px solid black;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 7px 0;
+    max-width: 400px;
+}
+
+dialog {
+  padding: 0;
+  border: none;
+}
+
+#showModalBtn {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		border: 0;
+		border-radius: 18px;
+		background: #94A8DD;
+        color: white;
+        max-width: 130px;
+        height: 36px;
+}
+
+.modalForm {
+    max-width: 800px;
+    min-height: 450px;
 }

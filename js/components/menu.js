@@ -18,11 +18,7 @@ let menu = {
         </nav>`
 }
 
-function renderMenu(menu){
+export default function getMenu(){
     const header = document.getElementById('header');
     header.innerHTML = menu['menu'];
-}
-
-export default function getMenu(){
-    renderMenu(menu);
 }
