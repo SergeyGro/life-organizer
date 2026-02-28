@@ -1,19 +1,35 @@
 export default class Task {
-    constructor(id, title, description, createdAt, priority){
-        this.id= id,
-        this.title= title,
-        this.description= description,
-        this.completed= false,
-        this.createdAt= createdAt,
-        this.priority= priority
+    constructor(id, title, description, priority){
+        this.id = id,
+        this.title = title,
+        this.description = description,
+        this.completed = false,
+        this.date= this.getDate(),
+        this.priority = priority
     }
+    // getTaskHtml(){
+    //     const task = `
+    //         <div class="task">
+    //             <h3>${this.title}</h1>
+    //             <p>${this.description}</p>
+    //             <span>Дата создания: ${this.date}</span>
+    //         </div>`
+    //     return task;
+    // }
     getTask(){
-        const task = `
-            <div class="task">
-                <h3>${this.title}</h1>
-                <p>${this.description}</p>
-                <span>Дата создания: ${this.createdAt}</span>
-            </div>`
-        return task;
+        const task = {
+            id: this.id,
+            title: this.title,
+            description: this.description,
+            completed: this.completed,
+            date: this.date,
+            priority: this.priority
+        }
+        return task
+    }
+    getDate(){
+        let date = new Date();
+        let dateStr = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
+        return dateStr;
     }
 }

@@ -78,8 +78,18 @@ a {
 }
 
 dialog {
-  padding: 0;
+  padding: 25px 30px;
   border: none;
+  border-radius: 15px;
+  margin: auto;
+  max-width: 90vw;
+  max-height: 90vh;
+  background-color: #BDE8CC;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
 }
 
 #showModalBtn {
@@ -96,5 +106,31 @@ dialog {
 
 .modalForm {
     max-width: 800px;
+    width: 100%;
     min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.modalInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modalInput{
+    background-color: rgba(189, 232, 204, 0.5);;
+}
+
+.modalBtn{
+    -webkit-appearance: none;
+		-moz-appearance: none;
+		appearance: none;
+		border: 0;
+		border-radius: 18px;
+		background: #94A8DD;
+        color: white;
+        width: 130px;
+        height: 36px;
 }
