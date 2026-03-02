@@ -1,14 +1,26 @@
 import { getModal } from '../components/modal.js';
 
-let tasks = [];
+let tasks = [{
+            id: 1,
+            title: 'this.title',
+            description: 'this.description',
+            completed: false,
+            date: 'this.date',
+            priority: 'this.priority'
+        }];
 
 function getTasks(){
   let elements = ``;
   tasks.forEach(e => {
-    let task = `<div class="task">
+    let task = `<div class="task ${taskDone(e.completed)}" data-id="${e.id}">
                   <h3>${e.title}</h1>
-                  <p>${e.description}</p>
-                  <span>Дата создания: ${e.date}</span>
+                  <p>Описание: ${e.description}</p>
+                  <p>Приоритет: ${e.priority}</p>
+                  <p>Дата создания: ${e.date}</p>
+                  <div>
+                    <button type="reset" class="deleteTask" data-id="${e.id}">X</button>
+                    <button type="submit" class="completedBtn" data-id="${e.id}">Выполнено</button>
+                  </div>
                 </div>`;
     elements = task + elements;
     
@@ -16,10 +28,47 @@ function getTasks(){
   return elements;
 }
 
-export function pushTask(task){
-  tasks.push(task);
+function renderTasksBlock(){
   const tasksBlock = document.querySelector('.tasksBlock');
   tasksBlock.innerHTML = getTasks();
+  deleteTask();
+  taskComplete()
+}
+
+export function pushTask(task){
+  tasks.push(task);
+  renderTasksBlock();
+}
+
+export function deleteTask(){
+  const btn = document.querySelectorAll('.deleteTask');
+  btn.forEach((e) => {
+    e.addEventListener('click', (e) => {
+    tasks = tasks.filter(task => task.id !== Number(e.target.dataset.id));
+    renderTasksBlock();
+    });
+  })
+}
+
+export function taskComplete(){
+  const btn = document.querySelectorAll('.completedBtn');
+  btn.forEach((e) => {
+    e.addEventListener('click', (e) => {
+    tasks = tasks.map(task => {
+      if (task.id === Number(e.target.dataset.id)) return { ...task, completed: !task.completed};
+      return task;
+    });
+    renderTasksBlock();
+    });
+  })
+}
+
+function taskDone(e){
+  if (e === true){
+    return 'taskDone';
+  } else {
+    return '';
+  }
 }
 
 export function openModal(){

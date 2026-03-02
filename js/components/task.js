@@ -7,15 +7,6 @@ export default class Task {
         this.date= this.getDate(),
         this.priority = priority
     }
-    // getTaskHtml(){
-    //     const task = `
-    //         <div class="task">
-    //             <h3>${this.title}</h1>
-    //             <p>${this.description}</p>
-    //             <span>Дата создания: ${this.date}</span>
-    //         </div>`
-    //     return task;
-    // }
     getTask(){
         const task = {
             id: this.id,

@@ -54,7 +54,6 @@ a {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    border: 1px solid darkslategreyck;
     padding: 15px;
     border-radius: 15px;
     box-shadow: 0 0 7px 0 darkslategrey;
@@ -70,10 +69,9 @@ a {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    border: 1px solid black;
     padding: 15px;
     border-radius: 15px;
-    box-shadow: 0 0 7px 0;
+    box-shadow: 0 0 7px 0 darkslategrey;
     max-width: 400px;
 }
 
@@ -133,4 +131,8 @@ dialog::backdrop {
         color: white;
         width: 130px;
         height: 36px;
+}
+
+.taskDone {
+    background-color: red;
 }

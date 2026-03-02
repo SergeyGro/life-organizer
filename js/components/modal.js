@@ -10,10 +10,27 @@ export function closeModal(){
 
 export function addTask(){
     const addTaskBtn = document.getElementById('addTaskBtn');
-    addTaskBtn.addEventListener('click', () => {
+    addTaskBtn.addEventListener('click', (e) => {
         const taskForm = document.forms.taskForm;
+        if(taskForm.title.style.borderColor === 'red' && taskForm.title.value !== ''){
+                    taskForm.title.style.borderColor = 'black';
+        }
+        if(taskForm.description.style.borderColor === 'red' && taskForm.description.value !== ''){
+                    taskForm.description.style.borderColor = 'black';
+        }
+        if (taskForm.title.value === '' || taskForm.description.value === ''){
+            e.preventDefault()
+            if (taskForm.title.value === ''){
+                taskForm.title.style.borderColor = 'red';
+            }
+            if (taskForm.description.value === ''){
+                taskForm.description.style.borderColor = 'red';
+            }
+            return;
+        }
         const task = new Task(Date.now(), taskForm.title.value, taskForm.description.value, taskForm.priority.value);
         pushTask(task.getTask());
+        taskForm.reset();
     });
 }
 
@@ -23,16 +40,16 @@ export function getModal(){
             <form method="dialog" name="taskForm" class="modalForm">
                 <p class="modalInputs">
                     <label>
-                        <input type="text" name="title" autofocus placeholder="Название задачи" class="modalInput">
+                        <p>Название задачи: <input type="text" name="title" autofocus class="modalInput"></p>
                     </label>
                     <label>
-                        <input type="text" name="description" autofocus placeholder="Описание" class="modalInput">
+                        <p>Описание: <input type="text" name="description" autofocus class="modalInput"></p>
                     </label>
                     <label>
                         Приоритет:
-                        <input type="radio" name="priority" autofocus value="Низкий">
-                        <input type="radio" name="priority" autofocus value="Средний" checked>
-                        <input type="radio" name="priority" autofocus value="Высокий">
+                        <p><input type="radio" name="priority" autofocus value="Низкий"> Низкий</p>
+                        <p><input type="radio" name="priority" autofocus value="Средний" checked> Средний</p>
+                        <p><input type="radio" name="priority" autofocus value="Высокий"> Высокий</p>
                     </label>
                 </p>
                 <menu >
