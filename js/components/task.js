@@ -5,7 +5,8 @@ export default class Task {
         this.description = description,
         this.completed = false,
         this.date= this.getDate(),
-        this.priority = priority
+        this.priority = priority,
+        this.isEditing = false
     }
     getTask(){
         const task = {
@@ -14,7 +15,8 @@ export default class Task {
             description: this.description,
             completed: this.completed,
             date: this.date,
-            priority: this.priority
+            priority: this.priority,
+            isEditing: this.isEditing
         }
         return task
     }

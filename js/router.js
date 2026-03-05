@@ -1,5 +1,5 @@
 import home from './pages/home.js'
-import { renderTasks, openModal, deleteTask, taskComplete } from './pages/tasks.js'
+import { renderTasks, openModal, deleteTask, taskComplete, editTask } from './pages/tasks.js'
 import habits from './pages/habits.js'
 import about from './pages/about.js'
 import { closeModal, addTask } from './components/modal.js';
@@ -25,6 +25,7 @@ function renderRoute(path) {
         addTask();
         deleteTask();
         taskComplete();
+        editTask();
     }
     } else {
     app.innerHTML = '<h1>404</h1><p>Такой страницы нет</p>';

@@ -67,8 +67,7 @@ a {
 
 .task {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    justify-content: space-between;
     padding: 15px;
     border-radius: 15px;
     box-shadow: 0 0 7px 0 darkslategrey;
@@ -135,4 +134,16 @@ dialog::backdrop {
 
 .taskDone {
     background-color: red;
+}
+
+.taskContentBLock{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.taskBtnBLock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
