@@ -62,6 +62,12 @@ a {
 .tasksBlock{
     display: flex;
     flex-direction: column;
+    gap: 40px;
+}
+
+.activeTaskBlock, .inactiveTaskBlock{
+    display: flex;
+    flex-direction: column;
     gap: 20px;
 }
 
