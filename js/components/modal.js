@@ -47,12 +47,12 @@ export function getModal(){
                     </label>
                     <label>
                         Приоритет:
-                        <p><input type="radio" name="priority" autofocus value="Низкий"> Низкий</p>
-                        <p><input type="radio" name="priority" autofocus value="Средний" checked> Средний</p>
-                        <p><input type="radio" name="priority" autofocus value="Высокий"> Высокий</p>
+                        <p><input type="radio" name="priority" autofocus value="3"> Низкий</p>
+                        <p><input type="radio" name="priority" autofocus value="2" checked> Средний</p>
+                        <p><input type="radio" name="priority" autofocus value="1"> Высокий</p>
                     </label>
                 </p>
-                <menu >
+                <menu>
                     <button type="reset" id="resetModal" class="modalBtn">Отмена</button>
                     <button type="submit" id="addTaskBtn" class="modalBtn">Добавить</button>
                 </menu>

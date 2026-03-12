@@ -59,6 +59,12 @@ a {
     box-shadow: 0 0 7px 0 darkslategrey;
 }
 
+.menuTasks{
+    display: flex;
+    justify-content: start;
+    gap: 50px;
+}
+
 .tasksBlock{
     display: flex;
     flex-direction: column;
