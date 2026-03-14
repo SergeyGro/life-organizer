@@ -1,54 +1,6 @@
 import { getModal } from '../components/modal.js';
 
-let tasks = [{
-            id: 1,
-            title: 'Задача',
-            description: 'Нужно сделать дело',
-            completed: false,
-            date: '2026-2-25',
-            priority: '2',
-            isEditing: false
-        },{
-            id: 2,
-            title: 'Задача 2',
-            description: 'Нужно сделать дело 2',
-            completed: true,
-            date: '2026-2-27',
-            priority: '3',
-            isEditing: false
-        },{
-            id: 3,
-            title: 'задача 3',
-            description: 'Нужно сделать дело 3',
-            completed: false,
-            date: '2026-2-3',
-            priority: '1',
-            isEditing: false
-        },{
-            id: 4,
-            title: 'задача 4',
-            description: 'Нужно сделать дело 4',
-            completed: true,
-            date: '2026-3-4',
-            priority: '2',
-            isEditing: false
-        },{
-            id: 5,
-            title: 'задача 5',
-            description: 'Нужно сделать дело 5',
-            completed: false,
-            date: '2026-1-4',
-            priority: '1',
-            isEditing: false
-        },{
-            id: 6,
-            title: 'задача 6',
-            description: 'Нужно сделать дело 6',
-            completed: false,
-            date: '2026-3-6',
-            priority: '3',
-            isEditing: false
-        }];
+let tasks = [];
 
 let filter = [{
               value: 'all',
@@ -66,6 +18,8 @@ let sortMonitor = {
   priority: false
 }
 
+let foundTask = '';
+
 function getTasks(){
   let activeElements = ``;
   let inactiveElements = ``;
@@ -73,8 +27,14 @@ function getTasks(){
   if (tasks.length === 0){
     return 'Добавьте задачу';
   } else {
-    let activeTask = tasks.filter(e => !e.completed);
-    let inactiveTask = tasks.filter(e => e.completed);
+    let activeTask = tasks.filter(e => {
+      if(foundTask === '') return !e.completed;
+      if(foundTask !== '') return !e.completed && e.title.toLowerCase().includes(foundTask.toLowerCase());
+    });
+    let inactiveTask = tasks.filter(e => {
+      if(foundTask === '') return e.completed;
+      if(foundTask !== '') return e.completed && e.title.toLowerCase().includes(foundTask.toLowerCase());
+    });
     if (activeTask.length > 0) {
       activeTask.forEach(e => {
       let task = `<div class="task ${taskDone(e.completed)}" data-id="${e.id}">
@@ -118,12 +78,16 @@ function getTasks(){
   }
   filter.forEach(e => {
     if(e.value === 'all' && e.stasus === true){
-      if (activeElements === '') result = `<div class="inactiveTaskBlock">${inactiveElements}</div>`;
-      if (inactiveElements === '') result = `<div class="activeTaskBlock">${activeElements}</div>`;
-      result = `<div class="activeTaskBlock">${activeElements}</div>
-              <div class="inactiveTaskBlock">${inactiveElements}</div>`;
+      if (activeElements === ''){
+        result = `<div class="inactiveTaskBlock">${inactiveElements}</div>`;
+      } else if (inactiveElements === ''){
+        result = `<div class="activeTaskBlock">${activeElements}</div>`;
+      } else {
+        result = `<div class="activeTaskBlock">${activeElements}</div>
+                <div class="inactiveTaskBlock">${inactiveElements}</div>`;
+      }
     }
-    if(e.value === 'active' && e.stasus === true){
+    if(e.value === 'active' && e.stasus === true){    
       if (activeElements === ''){
         result = 'Нет активных задач';
       } else {
@@ -148,11 +112,16 @@ function renderTasksBlock(){
   taskComplete();
   editTask();
   changeCounterTask();
+  saveTasks();
 }
 
 export function pushTask(task){
   tasks.push(task);
   renderTasksBlock();
+}
+
+function saveTasks(){
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 function priorityValue(value){
@@ -176,7 +145,6 @@ export function deleteTask(){
 }
 
 export function taskComplete(){
-  // Проверить как будет работать с сохранением данных
   const checkbox = document.querySelectorAll('.completed');
   checkbox.forEach((e) => {
     e.addEventListener('change', (el) => {
@@ -298,6 +266,15 @@ export function sortTasks(){
   })
 }
 
+export function searchTask(){
+  const searchForm = document.forms.searchTaskForm;
+  searchForm.searchTaskBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    foundTask = searchForm.searchTaskInput.value;
+    renderTasksBlock();
+  })
+}
+
 export function openModal(){
   const modalBtn = document.getElementById('showModalBtn');
   const modal = document.getElementById('modal');
@@ -307,27 +284,33 @@ export function openModal(){
 }
 
 export function renderTasks(){
-    let tasksBlock = `<div class="tasks">
-                        <h1>Задачи</h1>
-                        <button id="showModalBtn">Добавить задачу</button>
-                        <div class="menuTasks">
-                          <h3>Активные задачи: <span id="counterTask">${counterTask()}</span></h3>
-                          <div>
-                            <form name="filterTasksForm">
-                              <p><input name="radioFilter" type="radio" value="all" checked> Все</p>
-                              <p><input name="radioFilter" type="radio" value="active"> Активные</p>
-                              <p><input name="radioFilter" type="radio" value="completed"> Выполненые</p>
-                            </form>
-                          </div>
-                          <menu>
-                              <button id="sortDateBtn">Дата</button>
-                              <button id="sortPriorityBtn">Приоритет</button>
-                          </menu>
+  const saved = localStorage.getItem('tasks');
+  tasks = saved ? JSON.parse(saved) : [];
+  let tasksBlock = `<div class="tasks">
+                      <h1>Задачи</h1>
+                      <button id="showModalBtn">Добавить задачу</button>
+                      <div class="menuTasks">
+                        <h3>Активные задачи: <span id="counterTask">${counterTask()}</span></h3>
+                        <div>
+                          <form name="filterTasksForm">
+                            <p><input name="radioFilter" type="radio" value="all" checked> Все</p>
+                            <p><input name="radioFilter" type="radio" value="active"> Активные</p>
+                            <p><input name="radioFilter" type="radio" value="completed"> Выполненые</p>
+                          </form>
                         </div>
-                        <div class="tasksBlock">
-                          ${getTasks()}
-                        </div>
-                        ${getModal()}
-                      </div>`;
-    return tasksBlock;
+                        <menu>
+                            <button id="sortDateBtn">Дата</button>
+                            <button id="sortPriorityBtn">Приоритет</button>
+                        </menu>
+                        <form name="searchTaskForm">
+                            <input name="searchTaskInput" type="text" autofocus class="searchTaskInput" placeholder="Поиск задачи">
+                            <button class="searchTaskBtn" name="searchTaskBtn">Искать</button>
+                        </form>
+                      </div>
+                      <div class="tasksBlock">
+                        ${getTasks()}
+                      </div>
+                      ${getModal()}
+                    </div>`;
+  return tasksBlock;
 };
