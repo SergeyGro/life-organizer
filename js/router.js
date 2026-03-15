@@ -1,13 +1,13 @@
 import home from './pages/home.js'
 import { renderTasks, openModal, deleteTask, taskComplete, editTask, filterTasks, sortTasks, searchTask } from './pages/tasks.js'
-import habits from './pages/habits.js'
+import { renderHabits, addHabit } from './pages/habits.js'
 import about from './pages/about.js'
 import { closeModal, addTask } from './components/modal.js';
 
 const routes = {
     '/': home,
     '/tasks': renderTasks(),
-    '/habits': habits,
+    '/habits': renderHabits(),
     '/about': about
 }
 
@@ -29,6 +29,9 @@ function renderRoute(path) {
         filterTasks();
         sortTasks();
         searchTask();
+    }
+    if (normalizedPath === '/habits'){
+        addHabit();
     }
     } else {
     app.innerHTML = '<h1>404</h1><p>Такой страницы нет</p>';

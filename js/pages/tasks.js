@@ -39,7 +39,7 @@ function getTasks(){
       activeTask.forEach(e => {
       let task = `<div class="task ${taskDone(e.completed)}" data-id="${e.id}">
                     <div class="taskContentBLock">
-                      <h3>${e.isEditing ? `<input type="text" class="editTaskInput" id="editTitle" value="${e.title}">` : e.title}</h1>
+                      <h3>${e.isEditing ? `<input type="text" class="editTaskInput" id="editTitle" value="${e.title}">` : e.title}</h3>
                       <p>Описание: ${e.isEditing ? `<input type="text" class="editTaskInput" id="editDescription" value="${e.description}">` : e.description}</p>
                       <p>Приоритет: ${e.isEditing ? `<p><input type="radio" name="priority" class="inputPriority" autofocus value="3" ${e.priority === '3' ? 'checked' : ''}> Низкий</p>
                                                       <p><input type="radio" name="priority" class="inputPriority" autofocus value="2" ${e.priority === '2' ? 'checked' : ''}> Средний</p>
