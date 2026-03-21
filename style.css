@@ -159,3 +159,74 @@ dialog::backdrop {
     flex-direction: column;
     justify-content: space-between;
 }
+
+.habits{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.habitsBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.habit {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 7px 0 darkslategrey;
+    max-width: 400px;
+}
+
+.habitContentBLock {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.weekProgress {
+    margin: 15px 0;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 0 7px 0 darkslategrey;
+}
+
+.weekDays {
+    display: flex;
+    justify-content: space-around;
+}
+
+.dayCell {
+    font-size: 15px;
+}
+
+.dayLabel {
+    color: #666;
+}
+
+.dayNumber {
+    font-weight: 550;
+}
+
+.dayStatus {
+    width: 32px;
+    height: 32px;
+    margin: 0 auto;
+    border-radius: 50%;
+}
+
+.dayStatus.completed {
+  background-color: #4caf50;
+}
+
+.dayStatus.missed {
+  background-color: #f44336;
+}
+
+.dayStatus.pending {
+  background-color: #e0e0e0;
+}

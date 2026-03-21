@@ -12,14 +12,14 @@ function getHabits(){
                     <div class="habitContentBLock">
                         <h3>${e.name}</h3>
                         <p>Текущая серия: ${e.streak}</p>
-                        <p>История выполнения: </p>
                     </div>
-                    <div>
-                        Визуализация последних 7 дней
-                    </div>
+                    ${renderWeekProgress(e)}
                     <menu>
                         <button type="reset" class="deleteHabit" data-id="${e.id}">X</button>
-                        <input type="checkbox" class="completed" data-id="${e.id}">
+                        <label class="mark-label">
+                            <input type="checkbox" class="markHabit" data-id="${e.id}" ${e.marker ? 'checked' : ''}>
+                            <span>Отметить сегодня</span>
+                        </label>
                     </menu>
                   </div>`;
             habitsElemets = habitsElemets + habit;
@@ -32,6 +32,9 @@ function initHabits(){
     const habitsBlock = document.querySelector('.habitsBlock');
     habitsBlock.innerHTML = getHabits();
     deleteHabit();
+    markHabit();
+
+    saveHabits();
 }
 
 export function addHabit(){
@@ -41,6 +44,7 @@ export function addHabit(){
         if (addform.addHabitInput.value === '') alert('Введите название привычки');
         if (addform.addHabitInput.value !== '') {
             let habit = new Habit(addform.addHabitInput.value);
+            habit.getHistory();
             habits.push(habit.getHabit());
             addform.addHabitInput.value = '';
             initHabits();
@@ -48,22 +52,130 @@ export function addHabit(){
     })
 }
 
-function deleteHabit(){
-  const btn = document.querySelectorAll('.deleteHabit');
-  btn.forEach((e) => {
-    e.addEventListener('click', (el) => {
-    const result = confirm('Вы уверены что хотите удалить привычку?');
-    if (result) {
-      habits = habits.filter(habit => habit.id !== Number(el.target.dataset.id));
-      initHabits();
+export function deleteHabit(){
+    const btn = document.querySelectorAll('.deleteHabit');
+    btn.forEach((e) => {
+        e.addEventListener('click', (el) => {
+            const result = confirm('Вы уверены что хотите удалить привычку?');
+            if (result) {
+            habits = habits.filter(habit => habit.id !== Number(el.target.dataset.id)
+        );
+        initHabits();
     }
     return;
     });
   })
 }
 
+function initHistory(habit){
+    const today = new Date();
+    const keysHistory = Object.keys(habit.history).sort();
+    if (keysHistory.length === 0) return;
+    const oldestDate = new Date(keysHistory[0]);
+    let currentDate = new Date(oldestDate);
+    while (currentDate <= today) {
+        const dateStr = currentDate.toISOString().split('T')[0];
+        if (!habit.history[dateStr]) {
+            habit.history[dateStr] = false;
+        }
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+    return habit;
+}
+
+export function markHabit(){
+    const checkbox = document.querySelectorAll('.markHabit');
+    checkbox.forEach(e => {
+        e.addEventListener('change', () => {
+            habits = habits.map(habit => {
+                const date = new Date();
+                const dateStr = date.toISOString().split('T')[0];
+                if(habit.id === parseInt(e.dataset.id)){
+                    if(habit.marker === false){
+                        habit.history[dateStr] = true;
+                        habit.marker = true;
+                    } else {
+                        habit.history[dateStr] = false;
+                        habit.marker = false;
+                    }
+                    countingStreak(habit);
+                    return habit
+                } else {
+                    return habit;
+                }
+            })
+            initHabits();
+        })
+    })
+}
+
+function countingStreak(habit){
+    let streak = 0;
+    let currentDate = new Date();
+    while (true) {
+        const dateStr = currentDate.toISOString().split('T')[0];
+        const value = habit.history[dateStr];
+        if (value === true) {
+            streak++;
+        } else {
+            break;
+        }
+        currentDate.setDate(currentDate.getDate() - 1);
+    }
+    return habit.streak = streak;
+}
+
+function getLastDays() {
+    const days = [];
+    const today = new Date();
+  
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(today.getDate() - i);
+        const dateStr = date.toISOString().split('T')[0];
+        days.push({
+            date: dateStr,
+            dayOfWeek: date.toLocaleDateString('ru-RU', { weekday: 'short' }),
+            dayNumber: date.getDate()
+        });
+    }
+    return days;
+}
+
+function renderWeekProgress(habit) {
+    const lastDays = getLastDays();
+    return `
+        <div class="weekProgress">
+            <div class="weekDays">
+                ${lastDays.map(day => `
+                <div class="dayCell" data-date="${day.date}">
+                    <div class="dayLabel">${day.dayOfWeek}</div>
+                    <div class="dayNumber">${day.dayNumber}</div>
+                    <div class="dayStatus ${getStatusClass(habit, day.date)}"></div>
+                </div>
+            `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function getStatusClass(habit, date) {
+    const status = habit.history[date];
+    if (status === true) return 'completed';
+    if (status === false) return 'missed';
+    return 'pending';
+}
+
+function saveHabits(){
+    localStorage.setItem('habits', JSON.stringify(habits));
+}
+
 export function renderHabits(){
-    let habitsBlock = `<div class="habist">
+    const saved = localStorage.getItem('habits');
+    habits = saved ? JSON.parse(saved) : [];
+    habits.forEach(habit => initHistory(habit));
+    saveHabits();
+    let habitsBlock = `<div class="habits">
                         <h1>Привычки</h1>
                         <form name="addHabitForm">
                             <input name="addHabitInput" type="text" autofocus class="addHabitInput" placeholder="Новая привычка">

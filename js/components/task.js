@@ -21,8 +21,7 @@ export default class Task {
         return task
     }
     getDate(){
-        let date = new Date();
-        let dateStr = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
-        return dateStr;
+        const date = new Date();
+        return date.toISOString().split('T')[0];
     }
 }
