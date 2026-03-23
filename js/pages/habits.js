@@ -28,16 +28,22 @@ function getHabits(){
     return habitsElemets;
 }
 
-function initHabits(){
+function renderHabitsBlock(){
     const habitsBlock = document.querySelector('.habitsBlock');
     habitsBlock.innerHTML = getHabits();
     deleteHabit();
     markHabit();
-
     saveHabits();
 }
 
-export function addHabit(){
+export function initHabits(){
+    loadHabits();
+    habits.forEach(habit => initHistory(habit));
+    renderHabitsBlock();
+    addHabit();
+}
+
+function addHabit(){
     const addform = document.forms.addHabitForm;
     addform.addHabitkBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -47,12 +53,12 @@ export function addHabit(){
             habit.getHistory();
             habits.push(habit.getHabit());
             addform.addHabitInput.value = '';
-            initHabits();
+            renderHabitsBlock();
         }
     })
 }
 
-export function deleteHabit(){
+function deleteHabit(){
     const btn = document.querySelectorAll('.deleteHabit');
     btn.forEach((e) => {
         e.addEventListener('click', (el) => {
@@ -60,7 +66,7 @@ export function deleteHabit(){
             if (result) {
             habits = habits.filter(habit => habit.id !== Number(el.target.dataset.id)
         );
-        initHabits();
+        renderHabitsBlock();
     }
     return;
     });
@@ -73,6 +79,7 @@ function initHistory(habit){
     if (keysHistory.length === 0) return;
     const oldestDate = new Date(keysHistory[0]);
     let currentDate = new Date(oldestDate);
+    if (!habit.history[today.toISOString().split('T')[0]]) habit.marker = false;
     while (currentDate <= today) {
         const dateStr = currentDate.toISOString().split('T')[0];
         if (!habit.history[dateStr]) {
@@ -83,7 +90,7 @@ function initHistory(habit){
     return habit;
 }
 
-export function markHabit(){
+function markHabit(){
     const checkbox = document.querySelectorAll('.markHabit');
     checkbox.forEach(e => {
         e.addEventListener('change', () => {
@@ -104,7 +111,7 @@ export function markHabit(){
                     return habit;
                 }
             })
-            initHabits();
+            renderHabitsBlock();
         })
     })
 }
@@ -170,11 +177,12 @@ function saveHabits(){
     localStorage.setItem('habits', JSON.stringify(habits));
 }
 
-export function renderHabits(){
+function loadHabits(){
     const saved = localStorage.getItem('habits');
     habits = saved ? JSON.parse(saved) : [];
-    habits.forEach(habit => initHistory(habit));
-    saveHabits();
+}
+
+export function renderHabits(){
     let habitsBlock = `<div class="habits">
                         <h1>Привычки</h1>
                         <form name="addHabitForm">
@@ -182,7 +190,6 @@ export function renderHabits(){
                             <button class="addHabitkBtn" name="addHabitkBtn">Добавить</button>
                         </form>
                         <div class="habitsBlock">
-                        ${getHabits()}
                         </div>
                     </div>`;
     return habitsBlock;

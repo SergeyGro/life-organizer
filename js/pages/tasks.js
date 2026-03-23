@@ -1,4 +1,4 @@
-import { getModal } from '../components/modal.js';
+import { getModal, closeModal, addTask } from '../components/modal.js';
 
 let tasks = [];
 
@@ -115,6 +115,17 @@ function renderTasksBlock(){
   saveTasks();
 }
 
+export function initTasks(){
+  loadTask();
+  renderTasksBlock();
+  openModal();
+  closeModal();
+  addTask();
+  filterTasks();
+  sortTasks();
+  searchTask();
+}
+
 export function pushTask(task){
   tasks.push(task);
   renderTasksBlock();
@@ -122,6 +133,11 @@ export function pushTask(task){
 
 function saveTasks(){
   localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+function loadTask(){
+  const saved = localStorage.getItem('tasks');
+  tasks = saved ? JSON.parse(saved) : [];
 }
 
 function priorityValue(value){
@@ -206,7 +222,7 @@ function counterTask(){
   return counter;
 }
 
-function changeCounterTask() {
+function changeCounterTask(){
   const showCounter = document.getElementById('counterTask');
   return showCounter.innerHTML = `${counterTask()}`;
 }
@@ -284,13 +300,11 @@ export function openModal(){
 }
 
 export function renderTasks(){
-  const saved = localStorage.getItem('tasks');
-  tasks = saved ? JSON.parse(saved) : [];
   let tasksBlock = `<div class="tasks">
                       <h1>Задачи</h1>
                       <button id="showModalBtn">Добавить задачу</button>
                       <div class="menuTasks">
-                        <h3>Активные задачи: <span id="counterTask">${counterTask()}</span></h3>
+                        <h3>Активные задачи: <span id="counterTask"></span></h3>
                         <div>
                           <form name="filterTasksForm">
                             <p><input name="radioFilter" type="radio" value="all" checked> Все</p>
@@ -308,7 +322,7 @@ export function renderTasks(){
                         </form>
                       </div>
                       <div class="tasksBlock">
-                        ${getTasks()}
+                        
                       </div>
                       ${getModal()}
                     </div>`;

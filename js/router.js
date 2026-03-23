@@ -1,11 +1,11 @@
-import home from './pages/home.js'
-import { renderTasks, openModal, deleteTask, taskComplete, editTask, filterTasks, sortTasks, searchTask } from './pages/tasks.js'
-import { renderHabits, addHabit, deleteHabit, markHabit } from './pages/habits.js'
+import { renderHome, initHome } from './pages/home.js'
+import { renderTasks, initTasks } from './pages/tasks.js'
+import { renderHabits, initHabits } from './pages/habits.js'
 import about from './pages/about.js'
-import { closeModal, addTask } from './components/modal.js';
+
 
 const routes = {
-    '/': home,
+    '/': renderHome(),
     '/tasks': renderTasks(),
     '/habits': renderHabits(),
     '/about': about
@@ -18,25 +18,18 @@ function renderRoute(path) {
     }
     const app = document.getElementById('app');
     if (routes[normalizedPath]) {
-    app.innerHTML = routes[normalizedPath];
-    if (normalizedPath === '/tasks'){
-        openModal();
-        closeModal();
-        addTask();
-        deleteTask();
-        taskComplete();
-        editTask(); 
-        filterTasks();
-        sortTasks();
-        searchTask();
-    }
-    if (normalizedPath === '/habits'){
-        addHabit();
-        deleteHabit();
-        markHabit();
-    }
+        app.innerHTML = routes[normalizedPath];
+        if (normalizedPath === '/'){
+            initHome();
+        }
+        if (normalizedPath === '/tasks'){
+            initTasks();
+        }
+        if (normalizedPath === '/habits'){
+            initHabits();
+        }
     } else {
-    app.innerHTML = '<h1>404</h1><p>Такой страницы нет</p>';
+        app.innerHTML = '<h1>404</h1><p>Такой страницы нет</p>';
     }
 }
 
