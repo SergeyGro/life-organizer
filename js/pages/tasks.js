@@ -1,4 +1,4 @@
-import { getModal, closeModal, addTask } from '../components/modal.js';
+import { getModal, openModal, closeModal, addTask } from '../components/modal.js';
 
 let tasks = [];
 
@@ -288,14 +288,6 @@ export function searchTask(){
     e.preventDefault();
     foundTask = searchForm.searchTaskInput.value;
     renderTasksBlock();
-  })
-}
-
-export function openModal(){
-  const modalBtn = document.getElementById('showModalBtn');
-  const modal = document.getElementById('modal');
-  modalBtn.addEventListener('click', () => {
-    modal.showModal();
   })
 }
 

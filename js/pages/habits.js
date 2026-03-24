@@ -116,7 +116,7 @@ function markHabit(){
     })
 }
 
-function countingStreak(habit){
+export function countingStreak(habit){
     let streak = 0;
     let currentDate = new Date();
     while (true) {

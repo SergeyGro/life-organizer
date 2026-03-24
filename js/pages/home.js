@@ -1,3 +1,6 @@
+import { getModal, openModal, closeModal, addTask } from '../components/modal.js';
+import { countingStreak } from './habits.js';
+
 let tasks = [];
 let habits = [];
 let quotes = [
@@ -19,11 +22,20 @@ let quotes = [
 
 export function initHome(){
     loadTask();
-    loadHabits()
+    loadHabits();
     sayHi();
     getRandomQuote();
     renderStatistics();
     renderHabitsProgress();
+    openModal();
+    closeModal();
+    addTask();
+    markHabit();
+}
+
+export function initTasksHome(){
+    loadTask();
+    renderStatistics();
 }
 
 function sayHi(){
@@ -84,25 +96,56 @@ function getHabitsProgress(){
     let notMarkedElements = '';
     if(marked.length !== 0){
         marked.forEach(e => {
-            let habit = `<p">${e.name}</p>`
+            let habit = `
+                        <div class="habitHome">
+                            <p>${e.name}</p>
+                            <p>Серия: ${e.streak}</p>
+                        </div>`
             markedElements = markedElements + habit;
         })
     }
     if(notMarked.length !== 0){
         notMarked.forEach(e => {
-            let habit = `<p">${e.name}</p>`
+            let habit = `
+                        <div class="habitHome">
+                            <p>${e.name}</p>
+                            <label class="mark-label">
+                                <input type="checkbox" class="markHabit" data-id="${e.id}" ${e.marker ? 'checked' : ''}>
+                                <span>Отметить сегодня</span>
+                            </label>
+                        </div>`
             notMarkedElements = notMarkedElements + habit;
         })
     }
     if(markedElements === ''){
         return `<div class"markedHabits">Отмеченые: Нет</div>
-                <div class"notMarkedHabits">Не отмеченые: ${notMarkedElements}</div>`;
+                <div class"notMarkedHabits">
+                    <h4>Не отмеченые: </h4>
+                    <div class="habitsHome">
+                        ${notMarkedElements}
+                    </div>
+                </div>`;
     } else if(notMarkedElements === ''){
-        return `<div class"markedHabits">Отмеченые: ${markedElements}</div>
+        return `<div class"markedHabits">
+                    <h4>Отмеченые: </h4>
+                    <div>
+                        ${markedElements}
+                    </div>
+                </div>
                 <div class"notMarkedHabits">Не отмеченые: Нет</div>`;
     } else {
-        return `<div class"markedHabits">Отмеченые: ${markedElements}</div>
-                <div class"notMarkedHabits">Не отмеченые: ${notMarkedElements}</div>`
+        return `<div class"markedHabits">
+                    <h4>Отмеченые: </h4>
+                    <div>
+                        ${markedElements}
+                    </div>
+                </div>
+                <div class"notMarkedHabits">
+                    <h4>Не отмеченые: </h4>
+                    <div>
+                        ${notMarkedElements}
+                    </div>
+                </div>`
     }
 }
 
@@ -123,26 +166,56 @@ function getRandomQuote(){
     }
 }
 
+function markHabit(){
+    const checkbox = document.querySelectorAll('.markHabit');
+    checkbox.forEach(e => {
+        e.addEventListener('change', () => {
+            habits = habits.map(habit => {
+                const date = new Date();
+                const dateStr = date.toISOString().split('T')[0];
+                if(habit.id === parseInt(e.dataset.id)){
+                    if(habit.marker === false){
+                        habit.history[dateStr] = true;
+                        habit.marker = true;
+                    } else {
+                        habit.history[dateStr] = false;
+                        habit.marker = false;
+                    }
+                    countingStreak(habit);
+                    return habit
+                } else {
+                    return habit;
+                }
+            })
+            localStorage.setItem('habits', JSON.stringify(habits));
+            renderHabitsProgress();
+        })
+    })
+}
+
 export function renderHome(){
-    let homeBlock = `
-        <h1 class="greeting"></h1>
-        <p>Статистика задач: 
-            Выполнено - <span id="completedStat"></span>
-            Осталось - <span id="notCompletedStat"></span>
-        </p>
-        <div>
-            <h3>Прогресс по привычкам не сегодня</h3>
-            <div class="habitsProgress">
-            </div>
-        </div>
-        <div class="quotes">
-            <p id="quote"></p>
-            <p id="authorQuote"></p>
-        </div>
-        <menu>
-            <button class="btnHome" name="">Добавить задачу</button>
-            <button class="" name="">Отметить привычку</button>
-        </menu>
+    let homeBlock = `<div class="home">
+                        <h1 class="greeting"></h1>
+                        <div>
+                            <div>    
+                                <h3>Статистика задач: 
+                                    Выполнено - <span id="completedStat"></span>
+                                    Осталось - <span id="notCompletedStat"></span>
+                                </h3>
+                            </div>
+                            <div>
+                                <h3>Прогресс по привычкам не сегодня</h3>
+                                <div class="habitsProgress">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quotes">
+                            <p id="quote"></p>
+                            <p id="authorQuote"></p>
+                        </div>
+                        <button id="showModalBtn">Добавить задачу</button>
+                    </div> 
+        ${getModal()}
     `
     return homeBlock;
 }

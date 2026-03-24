@@ -1,5 +1,14 @@
 import Task from './task.js'
-import { pushTask } from '../pages/tasks.js';
+import { initTasks } from '../pages/tasks.js';
+import { initTasksHome } from '../pages/home.js'
+
+export function openModal(){
+  const modalBtn = document.getElementById('showModalBtn');
+  const modal = document.getElementById('modal');
+  modalBtn.addEventListener('click', () => {
+    modal.showModal();
+  })
+}
 
 export function closeModal(){
     const cancelBtn = document.getElementById('resetModal');
@@ -29,7 +38,14 @@ export function addTask(){
             return;
         }
         const task = new Task(Date.now(), taskForm.title.value, taskForm.description.value, taskForm.priority.value);
-        pushTask(task.getTask());
+        let tasks = [];
+        const saved = localStorage.getItem('tasks');
+        tasks = saved ? JSON.parse(saved) : [];
+        tasks.push(task.getTask());
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        console.log(window.location.pathname);
+        if(window.location.pathname === '/') initTasksHome();
+        if(window.location.pathname === '/tasks') initTasks();
         taskForm.reset();
     });
 }

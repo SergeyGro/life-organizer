@@ -110,6 +110,7 @@ dialog::backdrop {
 		background: #94A8DD;
         color: white;
         max-width: 130px;
+        width: 100%;
         height: 36px;
 }
 
@@ -229,4 +230,28 @@ dialog::backdrop {
 
 .dayStatus.pending {
   background-color: #e0e0e0;
+}
+
+.home{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 7px 0 darkslategrey;
+}
+
+.habitsProgress{
+    display: flex;
+    justify-content: space-between;
+}
+
+.habitsHome {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.habitHome{
+    display: flex;
 }
