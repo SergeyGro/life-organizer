@@ -1,6 +1,6 @@
 import Task from './task.js'
-import { initTasks } from '../pages/tasks.js';
-import { initTasksHome } from '../pages/home.js'
+import { renderTasksBlock } from '../pages/tasks.js';
+import { renderStatistics } from '../pages/home.js'
 
 export function openModal(){
   const modalBtn = document.getElementById('showModalBtn');
@@ -43,9 +43,8 @@ export function addTask(){
         tasks = saved ? JSON.parse(saved) : [];
         tasks.push(task.getTask());
         localStorage.setItem('tasks', JSON.stringify(tasks));
-        console.log(window.location.pathname);
-        if(window.location.pathname === '/') initTasksHome();
-        if(window.location.pathname === '/tasks') initTasks();
+        if(window.location.pathname === '/') renderStatistics();
+        if(window.location.pathname === '/tasks') renderTasksBlock();
         taskForm.reset();
     });
 }

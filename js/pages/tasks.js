@@ -105,18 +105,17 @@ function getTasks(){
   return result;
 }
 
-function renderTasksBlock(){
+export function renderTasksBlock(){
+  loadTask();
   const tasksBlock = document.querySelector('.tasksBlock');
   tasksBlock.innerHTML = getTasks();
   deleteTask();
   taskComplete();
   editTask();
   changeCounterTask();
-  saveTasks();
 }
 
 export function initTasks(){
-  loadTask();
   renderTasksBlock();
   openModal();
   closeModal();
@@ -124,11 +123,6 @@ export function initTasks(){
   filterTasks();
   sortTasks();
   searchTask();
-}
-
-export function pushTask(task){
-  tasks.push(task);
-  renderTasksBlock();
 }
 
 function saveTasks(){
@@ -153,6 +147,7 @@ export function deleteTask(){
     const result = confirm('Вы уверены что хотите удалить задачу?');
     if (result) {
       tasks = tasks.filter(task => task.id !== Number(el.target.dataset.id));
+      saveTasks();
       renderTasksBlock();
     }
     return;
@@ -168,6 +163,7 @@ export function taskComplete(){
       if (task.id === Number(el.target.dataset.id)) return { ...task, completed: !task.completed};
       return task;
     });
+    saveTasks();
     renderTasksBlock();
     });
   })
@@ -204,6 +200,7 @@ export function editTask(){
         }
         return task;
       })
+      saveTasks();
       renderTasksBlock();
     })
   })
@@ -214,17 +211,25 @@ function editTaskValue(e){
   if (e === true) return 'Сохранить';
 }
 
-function counterTask(){
+function counterTask(value){
   let counter = 0;
-  tasks.forEach(e => {
-    if (e.completed === false) counter = counter + 1;
-  })
+  if(value){
+    tasks.forEach(e => {
+      if (e.completed === false) counter = counter + 1;
+    })
+  } else {
+    tasks.forEach(e => {
+      if (e.completed === true) counter = counter + 1;
+    })
+  }
   return counter;
 }
 
 function changeCounterTask(){
-  const showCounter = document.getElementById('counterTask');
-  return showCounter.innerHTML = `${counterTask()}`;
+  const counterTaskActive = document.getElementById('counterTaskActive');
+  const counterTaskDone = document.getElementById('counterTaskDone');
+  counterTaskActive.innerHTML = `${counterTask(true)}`;
+  counterTaskDone.innerHTML = `${counterTask(false)}`;
 }
 
 export function filterTasks(){
@@ -243,6 +248,7 @@ export function filterTasks(){
           }
       }
     })
+    saveTasks();
     renderTasksBlock();
   }))
 }
@@ -265,6 +271,7 @@ export function sortTasks(){
       })
     }
     sortMonitor.date = !sortMonitor.date;
+    saveTasks();
     renderTasksBlock();
   })
   sortPriorityBtn.addEventListener('click', () => {
@@ -278,6 +285,7 @@ export function sortTasks(){
       })
     }
     sortMonitor.priority = !sortMonitor.priority;
+    saveTasks();
     renderTasksBlock();
   })
 }
@@ -287,6 +295,7 @@ export function searchTask(){
   searchForm.searchTaskBtn.addEventListener('click', (e) => {
     e.preventDefault();
     foundTask = searchForm.searchTaskInput.value;
+    saveTasks();
     renderTasksBlock();
   })
 }
@@ -296,17 +305,21 @@ export function renderTasks(){
                       <h1>Задачи</h1>
                       <button id="showModalBtn">Добавить задачу</button>
                       <div class="menuTasks">
-                        <h3>Активные задачи: <span id="counterTask"></span></h3>
-                        <div>
+                        <div class="counterTaskBlock">
+                          <h3>Активные задачи: <span id="counterTaskActive"></span></h3>
+                          <h3>Выполненые задачи: <span id="counterTaskDone"></span></h3>
+                        </div>
+                        <div class="filterTasksBlock">
+                          <h3>Фильтровать</h3>
                           <form name="filterTasksForm">
                             <p><input name="radioFilter" type="radio" value="all" checked> Все</p>
                             <p><input name="radioFilter" type="radio" value="active"> Активные</p>
                             <p><input name="radioFilter" type="radio" value="completed"> Выполненые</p>
                           </form>
                         </div>
-                        <menu>
-                            <button id="sortDateBtn">Дата</button>
-                            <button id="sortPriorityBtn">Приоритет</button>
+                        <menu class="sortTasksMenu">
+                            <button id="sortDateBtn" class="sortTasksBtn">Дата</button>
+                            <button id="sortPriorityBtn" class="sortTasksBtn">Приоритет</button>
                         </menu>
                         <form name="searchTaskForm">
                             <input name="searchTaskInput" type="text" autofocus class="searchTaskInput" placeholder="Поиск задачи">

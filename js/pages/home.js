@@ -1,5 +1,5 @@
 import { getModal, openModal, closeModal, addTask } from '../components/modal.js';
-import { countingStreak } from './habits.js';
+import { countingStreak, initHistory } from './habits.js';
 
 let tasks = [];
 let habits = [];
@@ -26,16 +26,11 @@ export function initHome(){
     sayHi();
     getRandomQuote();
     renderStatistics();
+    habits.forEach(habit => initHistory(habit));
     renderHabitsProgress();
     openModal();
     closeModal();
     addTask();
-    markHabit();
-}
-
-export function initTasksHome(){
-    loadTask();
-    renderStatistics();
 }
 
 function sayHi(){
@@ -74,7 +69,8 @@ function counterTask(value){
     return counter;
 }
 
-function renderStatistics(){
+export function renderStatistics(){
+    loadTask();
     const completedStat = document.getElementById('completedStat');
     const notCompletedStat = document.getElementById('notCompletedStat');
     completedStat.innerHTML = `${counterTask(true)}`;
@@ -98,8 +94,8 @@ function getHabitsProgress(){
         marked.forEach(e => {
             let habit = `
                         <div class="habitHome">
-                            <p>${e.name}</p>
-                            <p>Серия: ${e.streak}</p>
+                            <p class="habitHomeName">${e.name}</p>
+                            <p>&#128293;${e.streak}</p>
                         </div>`
             markedElements = markedElements + habit;
         })
@@ -108,51 +104,31 @@ function getHabitsProgress(){
         notMarked.forEach(e => {
             let habit = `
                         <div class="habitHome">
-                            <p>${e.name}</p>
-                            <label class="mark-label">
-                                <input type="checkbox" class="markHabit" data-id="${e.id}" ${e.marker ? 'checked' : ''}>
-                                <span>Отметить сегодня</span>
-                            </label>
+                            <p class="habitHomeName">${e.name}</p>
+                            <button class="markHabitBtn" data-id="${e.id}">Отметить</button>
                         </div>`
             notMarkedElements = notMarkedElements + habit;
         })
     }
-    if(markedElements === ''){
-        return `<div class"markedHabits">Отмеченые: Нет</div>
-                <div class"notMarkedHabits">
-                    <h4>Не отмеченые: </h4>
-                    <div class="habitsHome">
-                        ${notMarkedElements}
-                    </div>
-                </div>`;
-    } else if(notMarkedElements === ''){
-        return `<div class"markedHabits">
-                    <h4>Отмеченые: </h4>
-                    <div>
-                        ${markedElements}
-                    </div>
+    
+    return `<div class="habitsProgressHalf markedHabits">
+                <h4>Отмеченые</h4>
+                <div class="habitHomeBlock">
+                    ${markedElements === ''? 'Пусто' : markedElements}
                 </div>
-                <div class"notMarkedHabits">Не отмеченые: Нет</div>`;
-    } else {
-        return `<div class"markedHabits">
-                    <h4>Отмеченые: </h4>
-                    <div>
-                        ${markedElements}
-                    </div>
+            </div>
+            <div class="habitsProgressHalf notMarkedHabits">
+                <h4>Не отмеченые</h4>
+                <div class="habitHomeBlock">
+                    ${notMarkedElements === ''? 'Пусто' : notMarkedElements}
                 </div>
-                <div class"notMarkedHabits">
-                    <h4>Не отмеченые: </h4>
-                    <div>
-                        ${notMarkedElements}
-                    </div>
-                </div>`
-    }
+            </div>`
 }
 
 function renderHabitsProgress(){
     const habitsProgress = document.querySelector('.habitsProgress');
-    
     habitsProgress.innerHTML = getHabitsProgress();
+    markHabit();
 }
 
 function getRandomQuote(){
@@ -161,15 +137,15 @@ function getRandomQuote(){
     let num = Math.floor(Math.random() * 13);
     let quote = quotes[num];
     for(let key in quote){
-        quoteElem.innerHTML = key;
-        authorQuoteElem.innerHTML = quote[key];
+        quoteElem.innerHTML = quote[key];
+        authorQuoteElem.innerHTML = key;
     }
 }
 
 function markHabit(){
-    const checkbox = document.querySelectorAll('.markHabit');
+    const checkbox = document.querySelectorAll('.markHabitBtn');
     checkbox.forEach(e => {
-        e.addEventListener('change', () => {
+        e.addEventListener('click', () => {
             habits = habits.map(habit => {
                 const date = new Date();
                 const dateStr = date.toISOString().split('T')[0];
@@ -196,24 +172,27 @@ function markHabit(){
 export function renderHome(){
     let homeBlock = `<div class="home">
                         <h1 class="greeting"></h1>
-                        <div>
-                            <div>    
-                                <h3>Статистика задач: 
-                                    Выполнено - <span id="completedStat"></span>
-                                    Осталось - <span id="notCompletedStat"></span>
-                                </h3>
+                        <div class="mainContent">
+                            <div class="mainContentUp">
+                                <div class="mainContentBlock mainContentTasks">    
+                                    <h3>Статистика задач</h3>
+                                    <div class="mainContentStatistics">
+                                        <h4>Выполнено: <span id="completedStat"></span></h4>
+                                        <h4>Осталось: <span id="notCompletedStat"></span></h4>
+                                    </div>
+                                    <button id="showModalBtn">Добавить задачу</button>
+                                </div>
+                                <div class="quotes">
+                                    <p id="quote"></p>
+                                    <p id="authorQuote"></p>
+                                </div>
                             </div>
-                            <div>
+                            <div class="mainContentBlock mainContentHabits">
                                 <h3>Прогресс по привычкам не сегодня</h3>
                                 <div class="habitsProgress">
                                 </div>
                             </div>
                         </div>
-                        <div class="quotes">
-                            <p id="quote"></p>
-                            <p id="authorQuote"></p>
-                        </div>
-                        <button id="showModalBtn">Добавить задачу</button>
                     </div> 
         ${getModal()}
     `

@@ -30,6 +30,10 @@ a {
     font-size: 18px;
 }
 
+h1{
+    font-size: 40px;
+}
+
 .navHeader {
     padding: 50px 15px;
 }
@@ -55,19 +59,64 @@ a {
     flex-direction: column;
     gap: 30px;
     padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 0 7px 0 darkslategrey;
 }
 
 .menuTasks{
     display: flex;
-    justify-content: start;
+    justify-content: space-around;
     gap: 50px;
+    border-radius: 15px;
+    box-shadow: 0 0 7px 0 darkslategrey;
+    padding: 15px;
+}
+
+.counterTaskBlock{
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    align-items: end;
+    justify-content: center;
+    border-right: 2px dotted darkslategrey;
+    padding-right: 8px;
+}
+
+.filterTasksBlock{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 2px dotted darkslategrey;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.sortTasksMenu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 2px dotted darkslategrey;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+.sortTasksBtn{
+    -webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: 0;
+	border-radius: 14px;
+	background: #94A8DD;
+    color: white;
+    min-width: 90px;
+    height: 28px
 }
 
 .tasksBlock{
     display: flex;
     flex-direction: column;
+    border-top: 2px dashed darkslategrey;
+    padding-top: 20px;
     gap: 40px;
 }
 
@@ -143,6 +192,11 @@ dialog::backdrop {
         color: white;
         width: 130px;
         height: 36px;
+}
+
+.mark-label{
+    display: flex;
+    gap: 7px;
 }
 
 .taskDone {
@@ -235,10 +289,68 @@ dialog::backdrop {
 .home{
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 60px;
     padding: 15px;
+}
+
+.mainContent{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.mainContentUp{
+    display: flex;
+    gap: 130px;
+}
+
+.mainContentBlock{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 30px;
     border-radius: 15px;
     box-shadow: 0 0 7px 0 darkslategrey;
+    background-color: #dbfde7;
+}
+
+.mainContentTasks{
+    align-items: center;
+    max-width: 200px;
+    width: 100%;
+}
+
+.mainContentStatistics{
+    display: flex;
+    flex-direction: column;
+    max-width: 130px;
+    align-items: end;
+    padding-right: 5px;
+    gap: 15px;
+    border-right: 2px dotted darkslategrey;
+}
+
+.quotes{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+    gap: 20px;
+    border-bottom: 2px dashed darkslategrey;
+}
+
+#quote{
+    font-size: 40px;
+    font-style: italic;
+}
+
+#authorQuote{
+    font-size: 60px;
+}
+
+.mainContentHabits{
+    max-width: 700px;
+    width: 100%;
 }
 
 .habitsProgress{
@@ -246,12 +358,49 @@ dialog::backdrop {
     justify-content: space-between;
 }
 
-.habitsHome {
+.habitsProgressHalf{
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    width: 49%;
+    align-items: start;
+    gap: 20px;
+    border-left: 2px dotted darkslategrey;
+    padding-left: 13px;
+}
+
+.habitHomeBlock{
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    width: 100%;
 }
 
 .habitHome{
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 0 7px 0 darkslategrey;
+    padding: 10px;
+     word-break: break-word;
 }
+
+.habitHomeName {
+    max-width: 150px;
+}
+
+.markHabitBtn{
+    -webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: 0;
+	border-radius: 13px;
+	background: #94A8DD;
+    color: white;
+    max-width: 90px;
+    width: 100%;
+    height: 26px;
+}
+

@@ -73,7 +73,7 @@ function deleteHabit(){
   })
 }
 
-function initHistory(habit){
+export function initHistory(habit){
     const today = new Date();
     const keysHistory = Object.keys(habit.history).sort();
     if (keysHistory.length === 0) return;
