@@ -53,24 +53,27 @@ export function getModal(){
     let modalHtml = `
         <dialog id="modal">
             <form method="dialog" name="taskForm" class="modalForm">
-                <p class="modalInputs">
-                    <label>
-                        <p>Название задачи: <input type="text" name="title" autofocus class="modalInput"></p>
-                    </label>
-                    <label>
-                        <p>Описание: <input type="text" name="description" autofocus class="modalInput"></p>
-                    </label>
-                    <label>
-                        Приоритет:
-                        <p><input type="radio" name="priority" autofocus value="3"> Низкий</p>
-                        <p><input type="radio" name="priority" autofocus value="2" checked> Средний</p>
-                        <p><input type="radio" name="priority" autofocus value="1"> Высокий</p>
-                    </label>
-                </p>
-                <menu>
-                    <button type="reset" id="resetModal" class="modalBtn">Отмена</button>
-                    <button type="submit" id="addTaskBtn" class="modalBtn">Добавить</button>
-                </menu>
+                <div class="modalInputBlock">
+                    <label for="title">Название</label>
+                    <input type="text" id="title" name="title" autofocus class="modalInput">
+                </div>
+                <div class="modalInputBlock">
+                    <label for="description">Описание</label>
+                    <input type="text" id="description" name="description" autofocus class="modalInput">
+                </div>
+                <div class="modalInputBlock">
+                    <label for="priority">Приоритет</label>
+                    <select class="modalPriority" id="priority" name="priority">
+                        <option value="3">Низкий</option>
+                        <option value="2" selected>Средний</option> 
+                        <option value="1">Высокий</option>
+                    </select>
+                </div>
+
+                <div class="modalBtnMenu">
+                        <input type="reset" id="resetModal" class="modalBtn" value="ОТМЕНА">
+                        <input type="submit" id="addTaskBtn" class="modalBtn" value="ДОБАВИТЬ">
+                </div>
             </form>
         </dialog>
     `

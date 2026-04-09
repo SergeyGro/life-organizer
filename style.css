@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     /* color: #666B6F;
     color: #94A8DD;
     color: #BDE8CC; */
@@ -32,6 +33,61 @@ a {
 
 h1{
     font-size: 40px;
+    margin-bottom: 30px;
+}
+
+h2{
+    font-size: 22px;
+}
+
+h3{
+    font-size: 25px; 
+}
+
+p{
+    font-size: 18px;
+}
+
+button{
+    -webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: 0;
+    cursor: pointer;
+}
+
+input[type="checkbox"]{
+    -webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+    width: 30px;
+    height: 30px;
+    background-color: #fffef5;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 3px;
+    box-shadow: 0 0 3px 0 darkslategrey;
+}
+
+input[type="checkbox"]:after{
+    content: '\2713';
+    font-size: 26px;
+    display: none;
+}
+
+input[type="checkbox"]:checked:after{
+    display: block;
+}
+
+input[type="checkbox"]:hover:after{
+    display: block;
+    opacity: 0.2;
+}
+input[type="checkbox"]:hover:checked:after{
+     opacity: 1;
 }
 
 .navHeader {
@@ -101,10 +157,6 @@ h1{
 }
 
 .sortTasksBtn{
-    -webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	border: 0;
 	border-radius: 14px;
 	background: #94A8DD;
     color: white;
@@ -116,13 +168,7 @@ h1{
     display: flex;
     flex-direction: column;
     border-top: 2px dashed darkslategrey;
-    padding-top: 20px;
-    gap: 40px;
-}
-
-.activeTaskBlock, .inactiveTaskBlock{
-    display: flex;
-    flex-direction: column;
+    padding-top: 30px;
     gap: 20px;
 }
 
@@ -132,7 +178,103 @@ h1{
     padding: 15px;
     border-radius: 15px;
     box-shadow: 0 0 7px 0 darkslategrey;
-    max-width: 400px;
+    max-width: 630px;
+    min-width: 260px;
+    width: 100%;
+    background-color: #dbfde7;
+}
+
+.taskContentBLock{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+    width: 65%;
+}
+
+.taskTitle{
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid darkslategrey;
+}
+
+.taskDescription{
+    display: flex;
+}
+
+.taskDescriptionSpan{
+    margin-left: 5px;
+}
+
+.editTaskSelect{
+    border-right: 1px solid darkslategrey;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 5px 0 5px 0 darkslategrey;
+}
+
+.editTaskSelect:focus{
+    outline: none;
+}
+
+.editTaskInput{
+    font-family: inherit;
+    font-size: inherit; 
+    line-height: inherit; 
+    border: none;
+    background: none;
+    width: 100%;
+    text-overflow: ellipsis;
+    border-right: 1px solid darkslategrey;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 5px 0 5px 0 darkslategrey;
+    background-color: white;
+}
+
+.editTaskInput:focus{
+   outline: none;
+}
+
+.taskBtnBLock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: end;
+    border-left: 2px dashed darkslategrey;
+    padding-left: 15px;
+}
+
+.deleteBtn{
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #a9352d;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.editingTask{
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #94A8DD;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.saveEditTask{
+    width: 65px;
+    height: 30px;
+    border-radius: 15px;
+    background-color: #94A8DD;
+    color: #ffffff;
+    font-size: 11px;
+}
+
+.activeTaskBlock, .inactiveTaskBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
 }
 
 dialog {
@@ -140,8 +282,10 @@ dialog {
   border: none;
   border-radius: 15px;
   margin: auto;
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 30vw;
+  max-height: 50vh;
+  width: 100%;
+  height: auto;
   background-color: #BDE8CC;
 }
 
@@ -151,112 +295,201 @@ dialog::backdrop {
 }
 
 #showModalBtn {
-		-webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
-		border: 0;
-		border-radius: 18px;
-		background: #94A8DD;
-        color: white;
-        max-width: 130px;
-        width: 100%;
-        height: 36px;
+	border-radius: 25px;
+	background: #94A8DD;
+    color: white;
+    max-width: 200px;
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
 }
 
 .modalForm {
-    max-width: 800px;
-    width: 100%;
-    min-height: 450px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-.modalInputs {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.modalInput{
-    background-color: rgba(189, 232, 204, 0.5);;
-}
-
-.modalBtn{
-    -webkit-appearance: none;
-		-moz-appearance: none;
-		appearance: none;
-		border: 0;
-		border-radius: 18px;
-		background: #94A8DD;
-        color: white;
-        width: 130px;
-        height: 36px;
-}
-
-.mark-label{
-    display: flex;
-    gap: 7px;
-}
-
-.taskDone {
-    background-color: red;
-}
-
-.taskContentBLock{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.taskBtnBLock {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: 100%;
+}
+
+.modalInputBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 2px dashed darkslategrey;
+    padding-bottom: 25px;
+}
+
+.modalInput, .modalPriority{
+    font-family: inherit;
+    font-size: inherit; 
+    line-height: inherit; 
+    border-right: 1px solid darkslategrey;
+    border-radius: 0 15px 15px 0;
+    box-shadow: 5px 0 5px 0 darkslategrey;
+    padding: 5px;
+}
+
+.modalInput:focus, .modalPriority:focus{
+    outline: none;
+}
+
+.modalBtnMenu{
+    display: flex;
+    justify-content: space-between;
+}
+
+.modalBtn{
+	border-radius: 23px;
+    border: none;
+	background: #94A8DD;
+    color: white;
+    width: 150px;
+    height: 46px;
+}
+
+.markLabel{
+    display: flex;
+    gap: 10px;
+    align-self: self-end;
+    align-items: center;
+}
+
+.taskDone {
+    position: relative;
+    background-color: #7b9e87;
+}
+
+.taskDone:after {
+    position: absolute;
+    top: 33%;
+    right: 33%;
+    content: 'Выполнено';
+    color: white;
+    font-size: 40px;
+    border: 2px dashed white;
+    padding: 4px;
+    transform: rotate(20deg);
+}
+
+#searchTaskForm{
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 280px;
+    width: 100%;
+    align-items: center;
+}
+
+.searchTaskInput{
+    font-family: inherit;
+    font-size: inherit; 
+    line-height: inherit; 
+    margin: 0; 
+    width: 75%;
+    height: 38px;
+    border: 0;
+    border-radius: 19px 0 0 19px;
+    padding-left: 5px;
+}
+
+.searchTaskInput:focus{
+    outline: none;
+    box-shadow: 0 0 20px 0 #ffffff;
+}
+
+.searchTaskBtn{
+	border-radius: 0 19px 19px 0;
+	background: #94A8DD;
+    color: white;
+    width: 25%;
+    height: 38px;
+    border: 0;
+    border-left: none;
 }
 
 .habits{
     display: flex;
     flex-direction: column;
     gap: 30px;
+    padding: 15px;
+}
+
+#addHabitForm{
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 550px;
+    width: 100%;
+    align-items: center;
+}
+
+.addHabitInput{
+    font-family: inherit;
+    font-size: 20px; 
+    line-height: inherit; 
+    margin: 0; 
+    width: 75%;
+    height: 48px;
+    border: 0;
+    border-radius: 24px 0 0 24px;
+    padding-left: 15px;
+}
+
+.addHabitInput:focus{
+    outline: none;
+    box-shadow: 0 0 30px 0 #ffffff;
+}
+
+.addHabitkBtn{
+	border-radius: 0 24px 24px 0;
+	background: #94A8DD;
+    color: white;
+    width: 25%;
+    height: 48px;
+    border: 0;
+    border-left: none;
 }
 
 .habitsBlock {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    border-top: 2px dashed darkslategrey;
+    padding-top: 30px;
+    gap: 20px;
 }
 
 .habit {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
     padding: 15px;
     border-radius: 15px;
     box-shadow: 0 0 7px 0 darkslategrey;
-    max-width: 400px;
+    background-color: #dbfde7;
 }
 
-.habitContentBLock {
+.habitHeaderBLock {
     display: flex;
-    flex-direction: column;
-    gap: 15px;
+    justify-content: space-between;
+}
+
+.habitName {
+    display: block;
+    width: 80%;
+    word-wrap: break-word;
 }
 
 .weekProgress {
-    margin: 15px 0;
+    display: flex;
+    justify-content: space-around;
     padding: 10px;
     border-radius: 15px;
     box-shadow: 0 0 7px 0 darkslategrey;
 }
 
-.weekDays {
-    display: flex;
-    justify-content: space-around;
-}
-
 .dayCell {
-    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 17px;
 }
 
 .dayLabel {
@@ -289,7 +522,7 @@ dialog::backdrop {
 .home{
     display: flex;
     flex-direction: column;
-    gap: 60px;
+    gap: 30px;
     padding: 15px;
 }
 
@@ -392,10 +625,6 @@ dialog::backdrop {
 }
 
 .markHabitBtn{
-    -webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	border: 0;
 	border-radius: 13px;
 	background: #94A8DD;
     color: white;
@@ -403,4 +632,3 @@ dialog::backdrop {
     width: 100%;
     height: 26px;
 }
-

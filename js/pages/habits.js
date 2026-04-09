@@ -8,19 +8,18 @@ function getHabits(){
         return 'Добавьте привычку';
     } else {
         habits.forEach(e => { 
-            let habit = `<div class="habit" data-id="${e.id}">
-                    <div class="habitContentBLock">
-                        <h3>${e.name}</h3>
-                        <p>Текущая серия: ${e.streak}</p>
+            let habit = `
+                <div class="habit" data-id="${e.id}">
+                    <div class="habitHeaderBLock">
+                        <h3 class="habitName">${e.name}</h3>
+                        <button type="reset" class="deleteHabit deleteBtn" data-id="${e.id}">X</button>
                     </div>
+                    <p>Текущая серия: ${e.streak}</p>
                     ${renderWeekProgress(e)}
-                    <menu>
-                        <button type="reset" class="deleteHabit" data-id="${e.id}">X</button>
-                        <label class="mark-label">
-                            <input type="checkbox" class="markHabit" data-id="${e.id}" ${e.marker ? 'checked' : ''}>
-                            <span>Отметить сегодня</span>
-                        </label>
-                    </menu>
+                    <label class="markLabel">
+                        Отметить сегодня
+                        <input type="checkbox" class="markHabit" data-id="${e.id}" ${e.marker ? 'checked' : ''}>
+                    </label>
                   </div>`;
             habitsElemets = habitsElemets + habit;
         })
@@ -153,15 +152,13 @@ function renderWeekProgress(habit) {
     const lastDays = getLastDays();
     return `
         <div class="weekProgress">
-            <div class="weekDays">
-                ${lastDays.map(day => `
-                <div class="dayCell" data-date="${day.date}">
-                    <div class="dayLabel">${day.dayOfWeek}</div>
-                    <div class="dayNumber">${day.dayNumber}</div>
-                    <div class="dayStatus ${getStatusClass(habit, day.date)}"></div>
-                </div>
-            `).join('')}
+            ${lastDays.map(day => `
+            <div class="dayCell" data-date="${day.date}">
+                <div class="dayLabel">${day.dayOfWeek}</div>
+                <div class="dayNumber">${day.dayNumber}</div>
+                <div class="dayStatus ${getStatusClass(habit, day.date)}"></div>
             </div>
+        `).join('')}
         </div>
     `;
 }
@@ -185,7 +182,7 @@ function loadHabits(){
 export function renderHabits(){
     let habitsBlock = `<div class="habits">
                         <h1>Привычки</h1>
-                        <form name="addHabitForm">
+                        <form name="addHabitForm" id="addHabitForm">
                             <input name="addHabitInput" type="text" autofocus class="addHabitInput" placeholder="Новая привычка">
                             <button class="addHabitkBtn" name="addHabitkBtn">Добавить</button>
                         </form>
