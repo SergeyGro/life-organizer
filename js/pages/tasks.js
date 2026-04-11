@@ -49,9 +49,12 @@ function getTasks(){
                       <p>Дата создания: ${e.date}</p>
                     </div>
                     <div class="taskBtnBLock">
-                      <button type="reset" class="deleteTask deleteBtn" data-id="${e.id}">&#215;</button>
-                      <button class="editTask ${e.isEditing ? 'saveEditTask' : 'editingTask'}" data-id="${e.id}">${e.isEditing ? editTaskValue(true) : editTaskValue(false)}</button>
-                      <input type="checkbox" id="taskCheck" class="completed" data-id="${e.id}">
+                      <button type="reset" class="deleteTask deleteBtn" data-id="${e.id}"><i class="fas fa-trash-alt"></i></button>
+                      <button class="editTaskBtn ${e.isEditing ? 'saveEditTask' : 'editingTask'}" data-id="${e.id}">${e.isEditing ? editTaskValue(true) : editTaskValue(false)}</button>
+                      <label class="customCheckbox" data-id="${e.id}">
+                        <input type="checkbox" id="taskCheck" class="realCheckbox" data-id="${e.id}">
+                        <span class="fakeCheckbox"></span>
+                      </label>
                     </div>
                   </div>`;
       activeElements = activeElements + task;             
@@ -71,9 +74,12 @@ function getTasks(){
                       <p>Дата создания: ${e.date}</p>
                     </div>
                     <div class="taskBtnBLock">
-                      <button type="reset" class="deleteTask deleteBtn" data-id="${e.id}">&#215;</button>
-                      <button class="editTask ${e.isEditing ? 'saveEditTask' : 'editingTask'}" data-id="${e.id}">${e.isEditing ? editTaskValue(true) : editTaskValue(false)}</button>
-                      <input type="checkbox" id="taskCheck" class="completed" data-id="${e.id}" checked>
+                      <button type="reset" class="deleteTask deleteBtn" data-id="${e.id}"><i class="fas fa-trash-alt"></i></button>
+                      <button class="editTaskBtn ${e.isEditing ? 'saveEditTask' : 'editingTask'}" data-id="${e.id}">${e.isEditing ? editTaskValue(true) : editTaskValue(false)}</button>
+                      <label class="customCheckbox" data-id="${e.id}">
+                        <input type="checkbox" id="taskCheck" class="realCheckbox" data-id="${e.id}" checked>
+                        <span class="fakeCheckbox"></span>
+                      </label>
                     </div>
                   </div>`;
       inactiveElements = inactiveElements + task;             
@@ -160,7 +166,7 @@ export function deleteTask(){
 }
 
 export function taskComplete(){
-  const checkbox = document.querySelectorAll('.completed');
+  const checkbox = document.querySelectorAll('.realCheckbox');
   checkbox.forEach((e) => {
     e.addEventListener('change', (el) => {
     tasks = tasks.map(task => {
@@ -173,16 +179,8 @@ export function taskComplete(){
   })
 }
 
-// function taskDone(e){
-//   if (e === true){
-//     return 'taskDone';
-//   } else {
-//     return '';
-//   }
-// }
-
 export function editTask(){
-  const btn = document.querySelectorAll('.editTask');
+  const btn = document.querySelectorAll('.editTaskBtn');
   btn.forEach((e) => {
     e.addEventListener('click', (el) => {
       const taskId = Number(el.target.dataset.id);
@@ -211,8 +209,8 @@ export function editTask(){
 }
 
 function editTaskValue(e){
-  if (e === false) return '&#128396;';
-  if (e === true) return 'Сохранить';
+  if (e === false) return '<i class="fas fa-edit"></i>';
+  if (e === true) return '<i class="fas fa-save"></i>';
 }
 
 function counterTask(value){
