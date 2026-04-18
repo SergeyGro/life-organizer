@@ -5,9 +5,9 @@
 
 **LifeOrganizer** — трекер задач и привычек на чистом JavaScript. Проект создан в рамках изучения фронтенд-разработки без использования фреймворков.
 
-![Превью проекта](screenshots/Главная.PNG)
-![Превью проекта](screenshots/Задачи.PNG)
-![Превью проекта](screenshots/Привычки.PNG)
+![Главная](screenshots/home.png)
+![Задачи](screenshots/tasks.png)
+![Привычки](screenshots/habits.png)
 
 ---
 
