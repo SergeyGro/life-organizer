@@ -170,7 +170,7 @@ function markHabit(){
 }
 
 export function renderHome(){
-    let homeBlock = `<div class="home">
+    let homeBlock = `<div class="home mainBlock">
                         <h1 class="greeting"></h1>
                         <div class="mainContent">
                             <div class="mainContentUp">

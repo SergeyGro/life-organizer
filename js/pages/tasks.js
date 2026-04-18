@@ -51,7 +51,7 @@ function getTasks(){
                     <div class="taskBtnBLock">
                       <button type="reset" class="deleteTask deleteBtn" data-id="${e.id}"><i class="fas fa-trash-alt"></i></button>
                       <button class="editTaskBtn ${e.isEditing ? 'saveEditTask' : 'editingTask'}" data-id="${e.id}">${e.isEditing ? editTaskValue(true) : editTaskValue(false)}</button>
-                      <label class="customCheckbox" data-id="${e.id}">
+                      <label class="customCheckbox">
                         <input type="checkbox" id="taskCheck" class="realCheckbox" data-id="${e.id}">
                         <span class="fakeCheckbox"></span>
                       </label>
@@ -76,7 +76,7 @@ function getTasks(){
                     <div class="taskBtnBLock">
                       <button type="reset" class="deleteTask deleteBtn" data-id="${e.id}"><i class="fas fa-trash-alt"></i></button>
                       <button class="editTaskBtn ${e.isEditing ? 'saveEditTask' : 'editingTask'}" data-id="${e.id}">${e.isEditing ? editTaskValue(true) : editTaskValue(false)}</button>
-                      <label class="customCheckbox" data-id="${e.id}">
+                      <label class="customCheckbox">
                         <input type="checkbox" id="taskCheck" class="realCheckbox" data-id="${e.id}" checked>
                         <span class="fakeCheckbox"></span>
                       </label>
@@ -153,10 +153,10 @@ function priorityValue(value){
 export function deleteTask(){
   const btn = document.querySelectorAll('.deleteTask');
   btn.forEach((e) => {
-    e.addEventListener('click', (el) => {
+    e.addEventListener('click', () => {
     const result = confirm('Вы уверены что хотите удалить задачу?');
     if (result) {
-      tasks = tasks.filter(task => task.id !== Number(el.target.dataset.id));
+      tasks = tasks.filter(task => task.id !== Number(e.dataset.id));
       saveTasks();
       renderTasksBlock();
     }
@@ -182,8 +182,8 @@ export function taskComplete(){
 export function editTask(){
   const btn = document.querySelectorAll('.editTaskBtn');
   btn.forEach((e) => {
-    e.addEventListener('click', (el) => {
-      const taskId = Number(el.target.dataset.id);
+    e.addEventListener('click', () => {
+      const taskId = Number(e.dataset.id);
       tasks = tasks.map(task => {
         if (task.id === taskId) {
           if(task.isEditing === false) return { ...task, isEditing: true };
@@ -303,29 +303,31 @@ export function searchTask(){
 }
 
 export function renderTasks(){
-  let tasksBlock = `<div class="tasks">
+  let tasksBlock = `<div class="tasks mainBlock">
                       <h1>Задачи</h1>
                       <button id="showModalBtn">Добавить задачу</button>
                       <div class="menuTasks">
                         <div class="counterTaskBlock">
-                          <h2>Активные задачи: <span id="counterTaskActive"></span></h2>
-                          <h2>Выполненые задачи: <span id="counterTaskDone"></span></h2>
+                          <h2 class="counterTaskText">Активные задачи: <span id="counterTaskActive"></span></h2>
+                          <h2 class="counterTaskText">Выполненые задачи: <span id="counterTaskDone"></span></h2>
                         </div>
-                        <div class="filterTasksBlock">
-                          <h2>Фильтровать</h2>
-                          <form name="filterTasksForm">
-                            <p><input name="radioFilter" type="radio" value="all" checked> Все</p>
-                            <p><input name="radioFilter" type="radio" value="active"> Активные</p>
-                            <p><input name="radioFilter" type="radio" value="completed"> Выполненые</p>
-                          </form>
+                        <div class="sortFilterContainer">
+                          <div class="filterTasksBlock">
+                            <h2>Фильтровать</h2>
+                            <form name="filterTasksForm">
+                              <p><input name="radioFilter" type="radio" value="all" checked> Все</p>
+                              <p><input name="radioFilter" type="radio" value="active"> Активные</p>
+                              <p><input name="radioFilter" type="radio" value="completed"> Выполненые</p>
+                            </form>
+                          </div>
+                          <menu class="sortTasksMenu">
+                              <button id="sortDateBtn">Дата</button>
+                              <button id="sortPriorityBtn">Приоритет</button>
+                          </menu>
                         </div>
-                        <menu class="sortTasksMenu">
-                            <button id="sortDateBtn" class="sortTasksBtn">Дата</button>
-                            <button id="sortPriorityBtn" class="sortTasksBtn">Приоритет</button>
-                        </menu>
                         <form name="searchTaskForm" id="searchTaskForm">
-                            <input name="searchTaskInput" type="text" autofocus class="searchTaskInput" placeholder="Поиск задачи">
-                            <button class="searchTaskBtn" name="searchTaskBtn">Искать</button>
+                            <input name="searchTaskInput" type="text" autofocus placeholder="Поиск задачи">
+                            <button name="searchTaskBtn">Искать</button>
                         </form>
                       </div>
                       <div class="tasksBlock">

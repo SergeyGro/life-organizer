@@ -71,8 +71,8 @@ export function getModal(){
                 </div>
 
                 <div class="modalBtnMenu">
-                        <input type="reset" id="resetModal" class="modalBtn" value="ОТМЕНА">
-                        <input type="submit" id="addTaskBtn" class="modalBtn" value="ДОБАВИТЬ">
+                    <input type="reset" id="resetModal" class="modalBtn" value="Отмена">
+                    <input type="submit" id="addTaskBtn" class="modalBtn" value="Добавить">
                 </div>
             </form>
         </dialog>

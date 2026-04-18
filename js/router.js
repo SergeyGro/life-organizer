@@ -1,8 +1,8 @@
-import { renderHome, initHome } from './pages/home.js'
-import { renderTasks, initTasks } from './pages/tasks.js'
-import { renderHabits, initHabits } from './pages/habits.js'
-import about from './pages/about.js'
-
+import { renderHome, initHome } from './pages/home.js';
+import { renderTasks, initTasks } from './pages/tasks.js';
+import { renderHabits, initHabits } from './pages/habits.js';
+import about from './pages/about.js';
+import { currentLink } from './components/menu.js';
 
 const routes = {
     '/': renderHome(),
@@ -34,22 +34,23 @@ function renderRoute(path) {
 }
 
 function handleLinks() {
-    document.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const href = link.getAttribute('href');
-        if (href === window.location.pathname) {
-            return;
-        }
-        history.pushState(null, null, href);
-        renderRoute(href);
+    header.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const href = link.getAttribute('href');
+            if (href === window.location.pathname) {
+                return;
+            }
+            history.pushState(null, null, href);
+            renderRoute(href);
+            currentLink();
+        });
     });
-});
 }
 
 export default function initRouter() {
     renderRoute(window.location.pathname);
-    handleLinks()
+    handleLinks();
     window.addEventListener('popstate', () => {
     renderRoute(window.location.pathname);
     });

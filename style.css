@@ -2,54 +2,46 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* color: #666B6F;
-    color: #94A8DD;
-    color: #BDE8CC; */
+}
+
+html {
+    font-size: clamp(14px, 1.8vw, 18px);
 }
 
 body {
     background-color: #BDE8CC;
     font-family: "Manrope", sans-serif;
-}
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.5));
+    font-size: 1rem;
 }
 
 main {
-    display: flex;
-    justify-content: center;
-    min-width: 100%;
+    min-height: 100vh;
+    transition: all 0.3s ease;
 }
 
 a {
-    color: white;
     text-decoration: none;
-    font-size: 18px;
 }
 
-h1{
-    font-size: 40px;
-    margin-bottom: 30px;
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
 
-h2{
-    font-size: 22px;
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
 }
 
-h3{
-    font-size: 25px; 
+h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem; 
 }
 
-p{
-    font-size: 18px;
-}
-
-button{
+button {
     -webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -57,43 +49,82 @@ button{
     cursor: pointer;
 }
 
-/* input[type="checkbox"]{
-    -webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-    width: 30px;
-    height: 30px;
-    background-color: #fffef5;
-    border-radius: 5px;
-    cursor: pointer;
+footer {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 3px;
-    box-shadow: 0 0 3px 0 darkslategrey;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    padding: 30px;
+    border-top: 1px solid #e2e8f0;
+    background-color: #B4E4C5;
+    transition: all 0.3s ease;
 }
 
-input[type="checkbox"]:after{
-    content: '\2713';
-    font-size: 26px;
-    display: none;
+footer p {
+    color: rgb(98, 98, 98);
 }
 
-input[type="checkbox"]:checked:after{
-    display: block;
+.layoutContent {
+    margin-left: 230px;
 }
-
-input[type="checkbox"]:hover:after{
-    display: block;
-    opacity: 0.2;
-}
-
-input[type="checkbox"]:hover:checked:after{
-    opacity: 1;
-} */
 
 .navHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
     padding: 110px 35px;
+    height: 100%;
+    width: 230px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5));
+    backdrop-filter: blur(3px);
+    visibility: hidden;
+    transform: translateX(-100%);
+    transition: all 0.3s ease;
+}
+
+.navHeader.openMenu {
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.clickArea {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 230px;
+    width: 100%;
+    height: 100%;
+}
+
+.clickAreaNone {
+    display: block;
+}
+
+.menuBtn {
+    position: absolute;
+    top: 15px;
+    background: none;
+    font-size: 1.4rem;
+}
+
+.openMenuBtn {
+    right: 25px;
+    color: #BDE8CC;
+}
+
+.closeMenuBtn {
+    position: fixed;
+    left: 25px;
+    color: black;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.1s ease;
+}
+
+.closeMenuBtn.showBtn {
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.4s ease-in;
 }
 
 .ulNav {
@@ -104,7 +135,6 @@ input[type="checkbox"]:hover:checked:after{
 }
 
 .aNav {
-    font-size: 20px;
     color: #BDE8CC;
     transition: text-shadow 0.2s ease
 }
@@ -113,100 +143,163 @@ input[type="checkbox"]:hover:checked:after{
     margin-right: 8px;
 }
 
-.aNav:hover {
+.aNav:hover, .active {
     color: white;
     text-shadow: 0 0 1px #ffffff, 0 0 2px #ffffff;
 }
 
-.container {
-    width: 100%;
-    margin: 0 150px 0 300px;
+.footerLinks {
+    display: inline-flex;
+    gap: 15px;
+    font-size: 30px;
+    color: #334155;
+}
+
+.gitLink {
+    color: #24292f;
+}
+
+.tgLink {
+    color: #26a5e4;
 }
 
 #app {
-    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
 }
 
-.tasks {
+.mainBlock {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    padding: 15px;
+    width: clamp(310px, 85%, 1200px);
+    gap: 2rem;
 }
 
-.menuTasks{
+.menuTasks {
     display: flex;
     justify-content: space-around;
-    gap: 50px;
+    flex-wrap: wrap;
+    gap: 1rem;
     border-radius: 15px;
     box-shadow: 0 0 7px 0 darkslategrey;
-    padding: 15px;
+    padding: 1rem;
 }
 
-.counterTaskBlock{
+.menuTasks .sortFilterContainer {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.counterTaskBlock {
     display: flex;
     flex-direction: column;
-    gap: 10px; 
-    align-items: end;
+    gap: 0.5rem; 
     justify-content: center;
     border-right: 2px dotted darkslategrey;
-    padding-right: 8px;
+    padding-right: 0.5rem;
 }
 
-.filterTasksBlock{
+.counterTaskText {
+    text-align: end;
+    border-bottom: 1px solid darkslategrey;
+}
+
+.filterTasksBlock {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    justify-content: space-around;
+    gap: 0.5rem;
     border: 2px dotted darkslategrey;
     border-radius: 8px;
-    padding: 8px;
+    padding: 0.5rem;
 }
 
-.sortTasksMenu{
+.sortTasksMenu {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 1rem;
     border: 2px dotted darkslategrey;
     border-radius: 8px;
-    padding: 8px;
+    padding: 0.5rem;
 }
 
-.sortTasksBtn{
-	border-radius: 14px;
+.sortTasksMenu button {
+	border-radius: 0.8rem;
 	background-color: #94A8DD;
     color: white;
     min-width: 90px;
-    height: 28px;
+    height: 1.6rem;
     transition: background 0.2s ease;
 }
 
-.sortTasksBtn:hover{
+.sortTasksMenu button:hover {
 	background-color: #738DD3;
 }
 
-.tasksBlock{
+#searchTaskForm {
+    display: flex;
+    flex-wrap: nowrap;
+    width: clamp(150px, 100%, 400px);
+    align-items: center;
+}
+
+#searchTaskForm input {
+    font-family: inherit;
+    line-height: inherit; 
+    font-size: 1rem; 
+    margin: 0; 
+    width: 75%;
+    height: 2.2rem;
+    border: 0;
+    border-radius: 1.1rem 0 0 1.1rem;
+    padding-left: 0.6rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.searchTaskInput:focus {
+    outline: none;
+    box-shadow: 0 0 20px 0 #ffffff;
+}
+
+#searchTaskForm button {
+	border-radius: 0 19px 19px 0;
+	background: #94A8DD;
+    color: white;
+    width: 25%;
+    height: 2.2rem;
+    border: 0;
+    border-left: none;
+    transition: background 0.2s ease;
+}
+
+.searchTaskBtn:hover {
+	background-color: #738DD3;
+}
+
+.tasksBlock {
     display: flex;
     flex-direction: column;
     border-top: 2px dashed darkslategrey;
-    padding-top: 30px;
-    gap: 20px;
+    padding-top: 2rem;
+    gap: 2rem;
 }
 
 .task {
     display: flex;
     justify-content: space-between;
-    padding: 15px;
-    border-radius: 15px;
-    box-shadow: 0 0 7px 0 darkslategrey;
-    max-width: 630px;
-    min-width: 260px;
-    width: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 0.5rem 0 darkslategrey;
+    width: clamp(260px, 100% , 630px);
     background-color: #dbfde7;
 }
 
-.taskContentBLock{
+.taskContentBLock {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -214,31 +307,31 @@ input[type="checkbox"]:hover:checked:after{
     width: 65%;
 }
 
-.taskTitle{
+.taskTitle {
     margin-bottom: 20px;
     padding-bottom: 5px;
     border-bottom: 1px solid darkslategrey;
 }
 
-.taskDescription{
+.taskDescription {
     display: flex;
 }
 
-.taskDescriptionSpan{
+.taskDescriptionSpan {
     margin-left: 5px;
 }
 
-.editTaskSelect{
+.editTaskSelect {
     border-right: 1px solid darkslategrey;
     border-radius: 0 15px 15px 0;
     box-shadow: 5px 0 5px 0 darkslategrey;
 }
 
-.editTaskSelect:focus{
+.editTaskSelect:focus {
     outline: none;
 }
 
-.editTaskInput{
+.editTaskInput {
     font-family: inherit;
     font-size: inherit; 
     line-height: inherit; 
@@ -252,7 +345,7 @@ input[type="checkbox"]:hover:checked:after{
     background-color: white;
 }
 
-.editTaskInput:focus{
+.editTaskInput:focus {
    outline: none;
 }
 
@@ -265,13 +358,13 @@ input[type="checkbox"]:hover:checked:after{
     padding-left: 15px;
 }
 
-.deleteBtn{
-    width: 36px;
-    height: 36px;
-    border-radius: 18px;
+.deleteBtn {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
     background-color: #a9352d;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 1rem;
     transition: background 0.2s ease;
 }
 
@@ -279,17 +372,17 @@ input[type="checkbox"]:hover:checked:after{
     background-color: #912E27;
 }
 
-.editTaskBtn{
-    width: 36px;
-    height: 36px;
-    border-radius: 18px;
+.editTaskBtn {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
     background-color: #94A8DD;
     color: #ffffff;
-    font-size: 18px;
+    font-size: 1rem;
     transition: background 0.2s ease;
 }
 
-.editTaskBtn:hover{
+.editTaskBtn:hover {
 	background-color: #738DD3;
 }
 
@@ -309,11 +402,11 @@ input[type="checkbox"]:hover:checked:after{
 }
 
 .fakeCheckbox {
-  width: 30px;
-  height: 30px;
+  width: 2rem;
+  height: 2rem;
   background: white;
   border: 2px solid #ccc;
-  border-radius: 6px;
+  border-radius: 0.3rem;
   transition: all 0.2s ease;
   position: relative;
 }
@@ -331,30 +424,33 @@ input[type="checkbox"]:hover:checked:after{
   content: '';
   position: absolute;   
   top: 2px;
-  left: 8px;
-  width: 8px;
-  height: 16px;
+  left: 0.5rem;
+  width: 0.5rem;
+  height: 1rem;
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
 
-.activeTaskBlock, .inactiveTaskBlock{
+.activeTaskBlock, .inactiveTaskBlock {
     display: flex;
     flex-direction: column;
     align-items: start;
     gap: 20px;
 }
 
+.inactiveTaskBlock {
+    border-top: 2px dashed darkslategrey;
+    padding-top: 2rem;
+}
+
 dialog {
-  padding: 25px 30px;
+  padding: 1.5rem;
   border: none;
-  border-radius: 15px;
+  border-radius: 1rem;
   margin: auto;
-  max-width: 30vw;
-  max-height: 50vh;
-  width: 100%;
-  height: auto;
+  width: clamp(270px, 70%, 650px);
+  height: clamp(50vh, 60vh ,70vh);
   background-color: #BDE8CC;
 }
 
@@ -370,7 +466,7 @@ dialog::backdrop {
     max-width: 200px;
     width: 100%;
     height: 50px;
-    font-size: 16px;
+    font-size: 1rem;
     transition: all 0.2s ease;
 }
 
@@ -388,45 +484,46 @@ dialog::backdrop {
 .modalInputBlock {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0.5rem;
     border-bottom: 2px dashed darkslategrey;
-    padding-bottom: 25px;
+    padding-bottom: 1rem;
 }
 
-.modalInput, .modalPriority{
+.modalInput, .modalPriority {
     font-family: inherit;
     font-size: inherit; 
     line-height: inherit; 
     border-right: 1px solid darkslategrey;
     border-radius: 0 15px 15px 0;
     box-shadow: 5px 0 5px 0 darkslategrey;
-    padding: 5px;
+    padding: 0.3rem;
 }
 
-.modalInput:focus, .modalPriority:focus{
+.modalInput:focus, .modalPriority:focus {
     outline: none;
 }
 
-.modalBtnMenu{
+.modalBtnMenu {
     display: flex;
     justify-content: space-between;
+    gap: 0.5rem;
 }
 
-.modalBtn{
-	border-radius: 23px;
+.modalBtn {
+	border-radius: 1.2rem;
     border: none;
 	background-color: #94A8DD;
     color: white;
-    width: 150px;
-    height: 46px;
+    width: clamp(90px, 100%, 150px);
+    height: 2.4rem;
     transition: background 0.2s ease;
 }
 
-.modalBtn:hover{
+.modalBtn:hover {
 	background-color: #738DD3;
 }
 
-.markLabel{
+.markLabel {
     display: flex;
     gap: 10px;
     align-self: self-end;
@@ -434,117 +531,55 @@ dialog::backdrop {
 }
 
 .taskDone {
-    position: relative;
     background-color: #7b9e87;
 }
 
-.taskDone:after {
-    position: absolute;
-    top: 33%;
-    right: 33%;
-    content: 'Выполнено';
-    color: white;
-    font-size: 40px;
-    border: 2px dashed white;
-    padding: 4px;
-    transform: rotate(20deg);
-}
-
-#searchTaskForm{
+#addHabitForm {
     display: flex;
     flex-wrap: nowrap;
-    max-width: 280px;
-    width: 100%;
+    width: clamp(250px, 100%, 600px);
     align-items: center;
 }
 
-.searchTaskInput{
+#addHabitForm input {
     font-family: inherit;
-    font-size: inherit; 
+    font-size: 1.125rem; 
     line-height: inherit; 
     margin: 0; 
     width: 75%;
-    height: 38px;
+    height: 3rem;
     border: 0;
-    border-radius: 19px 0 0 19px;
-    padding-left: 5px;
+    border-radius: 1.5rem 0 0 1.5rem;
+    padding-left: 1rem;
     transition: box-shadow 0.2s ease;
 }
 
-.searchTaskInput:focus{
+#addHabitForm input:focus {
     outline: none;
-    box-shadow: 0 0 20px 0 #ffffff;
+    box-shadow: 0 0 2rem 0 #ffffff;
 }
 
-.searchTaskBtn{
-	border-radius: 0 19px 19px 0;
+#addHabitForm button {
+	border-radius: 0 1.5rem 1.5rem 0;
 	background: #94A8DD;
     color: white;
     width: 25%;
-    height: 38px;
+    height: 3rem;
     border: 0;
     border-left: none;
     transition: background 0.2s ease;
 }
 
-.searchTaskBtn:hover{
-	background-color: #738DD3;
-}
-
-.habits{
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    padding: 15px;
-}
-
-#addHabitForm{
-    display: flex;
-    flex-wrap: nowrap;
-    max-width: 550px;
-    width: 100%;
-    align-items: center;
-}
-
-.addHabitInput{
-    font-family: inherit;
-    font-size: 20px; 
-    line-height: inherit; 
-    margin: 0; 
-    width: 75%;
-    height: 48px;
-    border: 0;
-    border-radius: 24px 0 0 24px;
-    padding-left: 15px;
-    transition: box-shadow 0.2s ease;
-}
-
-.addHabitInput:focus{
-    outline: none;
-    box-shadow: 0 0 30px 0 #ffffff;
-}
-
-.addHabitkBtn{
-	border-radius: 0 24px 24px 0;
-	background: #94A8DD;
-    color: white;
-    width: 25%;
-    height: 48px;
-    border: 0;
-    border-left: none;
-    transition: background 0.2s ease;
-}
-
-.addHabitkBtn:hover{
+#addHabitForm button:hover {
 	background-color: #738DD3;
 }
 
 .habitsBlock {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
     border-top: 2px dashed darkslategrey;
-    padding-top: 30px;
-    gap: 20px;
+    padding-top: 2rem;
+    gap: 1.2rem;
 }
 
 .habit {
@@ -568,6 +603,15 @@ dialog::backdrop {
     word-wrap: break-word;
 }
 
+.habitCheckboxBlock {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: 15px;
+}
+
 .weekProgress {
     display: flex;
     justify-content: space-around;
@@ -580,7 +624,6 @@ dialog::backdrop {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 17px;
 }
 
 .dayLabel {
@@ -592,8 +635,8 @@ dialog::backdrop {
 }
 
 .dayStatus {
-    width: 32px;
-    height: 32px;
+    width: 1.6rem;
+    height: 1.6rem;
     margin: 0 auto;
     border-radius: 50%;
 }
@@ -610,41 +653,35 @@ dialog::backdrop {
   background-color: #e0e0e0;
 }
 
-.home{
+.mainContent {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    padding: 15px;
+    gap: 3rem;
 }
 
-.mainContent{
+.mainContentUp {
     display: flex;
-    flex-direction: column;
-    gap: 50px;
+    justify-content: space-between;
+    gap: 2rem;
 }
 
-.mainContentUp{
-    display: flex;
-    gap: 130px;
-}
-
-.mainContentBlock{
+.mainContentBlock {
     display: flex;
     flex-direction: column;
     padding: 15px;
-    gap: 30px;
+    gap: 1rem;
     border-radius: 15px;
     box-shadow: 0 0 7px 0 darkslategrey;
     background-color: #dbfde7;
 }
 
-.mainContentTasks{
+.mainContentTasks {
+    justify-content: space-between;
     align-items: center;
-    max-width: 200px;
-    width: 100%;
+    width: clamp(230px, 25%, 25%);
 }
 
-.mainContentStatistics{
+.mainContentStatistics {
     display: flex;
     flex-direction: column;
     max-width: 130px;
@@ -654,56 +691,59 @@ dialog::backdrop {
     border-right: 2px dotted darkslategrey;
 }
 
-.quotes{
+.quotes {
     display: flex;
     flex-direction: column;
     justify-content: end;
     align-items: end;
-    gap: 20px;
+    gap: 1rem;
     border-bottom: 2px dashed darkslategrey;
+    width: clamp(230px, 70%, 70%);
 }
 
-#quote{
-    font-size: 40px;
+#quote {
+    font-size: 2rem;
     font-style: italic;
 }
 
-#authorQuote{
-    font-size: 60px;
+#authorQuote {
+    font-size: 2.5rem;
+    font-weight: 500;
 }
 
-.mainContentHabits{
-    max-width: 700px;
-    width: 100%;
+.mainContentHabits {
+    width: min(100%, 700px);
 }
 
-.habitsProgress{
+.habitsProgress {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
-.habitsProgressHalf{
+.habitsProgressHalf {
     display: flex;
     flex-direction: column;
-    width: 49%;
+    width: max(48%, 193px);
     align-items: start;
     gap: 20px;
     border-left: 2px dotted darkslategrey;
     padding-left: 13px;
 }
 
-.habitHomeBlock{
+.habitHomeBlock {
     display: flex;
     flex-direction: column;
     gap: 13px;
     width: 100%;
 }
 
-.habitHome{
+.habitHome {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 70%;
+    width: max(70%, 180px);
     height: auto;
     border-radius: 15px;
     box-shadow: 0 0 7px 0 darkslategrey;
@@ -715,11 +755,90 @@ dialog::backdrop {
     max-width: 150px;
 }
 
-.markHabitBtn{
+.markHabitBtn {
 	border-radius: 13px;
-	background: #94A8DD;
+	background-color: #94A8DD;
     color: white;
     max-width: 90px;
     width: 100%;
     height: 26px;
+    transition: background 0.2s ease;
+}
+
+.markHabitBtn:hover {
+    background-color: #738DD3;
+}
+
+.aboutSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.about h2 i {
+  color: #3b82f6;
+}
+
+.aboutList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.aboutList li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.aboutList li:hover {
+  background-color: #f1f5f9;
+  transform: translateX(4px);
+}
+
+.aboutList li::before {
+  content: '▹';
+  color: #3b82f6;
+}
+
+.about a {
+  color: #3b82f6;
+  transition: color 0.2s ease;
+}
+
+.about a:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.about small {
+  display: block;
+  color: #94a3b8;
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+    .mainBlock {
+        align-items: center;
+    }
+
+    .mainContentUp {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .quotes {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        align-items: end;
+        gap: 1rem;
+        border-bottom: 2px dashed darkslategrey;
+        width: 100%;
+    }
 }

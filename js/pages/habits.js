@@ -12,14 +12,17 @@ function getHabits(){
                 <div class="habit" data-id="${e.id}">
                     <div class="habitHeaderBLock">
                         <h3 class="habitName">${e.name}</h3>
-                        <button type="reset" class="deleteHabit deleteBtn" data-id="${e.id}">X</button>
+                        <button type="reset" class="deleteHabit deleteBtn" data-id="${e.id}"><i class="fas fa-trash-alt"></i></button>
                     </div>
                     <p>Текущая серия: ${e.streak}</p>
                     ${renderWeekProgress(e)}
-                    <label class="markLabel">
-                        Отметить сегодня
-                        <input type="checkbox" class="markHabit" data-id="${e.id}" ${e.marker ? 'checked' : ''}>
-                    </label>
+                    <div class="habitCheckboxBlock">
+                        <p>Отметить сегодня</p>
+                        <label class="customCheckbox">
+                            <input type="checkbox" id="taskCheck" class="realCheckbox markHabit" data-id="${e.id}" ${e.marker ? 'checked' : ''}>
+                            <span class="fakeCheckbox"></span>
+                        </label>
+                    </div>
                   </div>`;
             habitsElemets = habitsElemets + habit;
         })
@@ -180,11 +183,11 @@ function loadHabits(){
 }
 
 export function renderHabits(){
-    let habitsBlock = `<div class="habits">
+    let habitsBlock = `<div class="habits mainBlock">
                         <h1>Привычки</h1>
                         <form name="addHabitForm" id="addHabitForm">
-                            <input name="addHabitInput" type="text" autofocus class="addHabitInput" placeholder="Новая привычка">
-                            <button class="addHabitkBtn" name="addHabitkBtn">Добавить</button>
+                            <input name="addHabitInput" type="text" autofocus placeholder="Новая привычка">
+                            <button name="addHabitkBtn">Добавить</button>
                         </form>
                         <div class="habitsBlock">
                         </div>
