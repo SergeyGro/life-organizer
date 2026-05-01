@@ -13,7 +13,7 @@
 
 ## 🎯 Демо
 
-👉 [Посмотреть демо] Здесь будет ссылка
+👉 https://sergeygro.github.io/life-organizer/
 
 ---
 
