@@ -23,6 +23,16 @@
         
     </footer>
 
+    <script>
+        (function() {
+            const match = window.location.hash.match(/^#\/(.*)$/);
+            if (match) {
+                const newPath = match[1];
+                window.history.replaceState(null, null, '/' + newPath);
+            }
+        })();
+    </script>
+    
     <script type="module" src="js/app.js"></script>
 </body>
 </html>
