@@ -27,13 +27,13 @@ function renderRoute(path) {
     const app = document.getElementById('app');
     if (routes[normalizedPath]) {
         app.innerHTML = routes[normalizedPath];
-        if (normalizedPath === '/life-organizer/'){
+        if (normalizedPath === '/'){
             initHome();
         }
-        if (normalizedPath === '/life-organizer/tasks'){
+        if (normalizedPath === '/tasks'){
             initTasks();
         }
-        if (normalizedPath === '/life-organizer/habits'){
+        if (normalizedPath === '/habits'){
             initHabits();
         }
     } else {
