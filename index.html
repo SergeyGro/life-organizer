@@ -27,12 +27,10 @@
         (function() {
             const match = window.location.hash.match(/^#\/(.*)$/);
             if (match) {
-                let fullPath = match[1];
-                const basePath = '/life-organizer';
-                if (fullPath.startsWith(basePath)) {
-                    fullPath = fullPath.slice(basePath.length) || '/';
-                }
-                window.history.replaceState(null, null, basePath + fullPath);
+                let cleanPath = match[1];
+                if (cleanPath.startsWith('/')) cleanPath = cleanPath.slice(1);
+                const finalPath = '/life-organizer/' + cleanPath;
+                window.history.replaceState(null, null, finalPath);
             }
         })();
     </script>

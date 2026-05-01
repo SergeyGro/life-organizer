@@ -5,7 +5,8 @@
         <title>Life organizer</title>
         <script type="text/javascript">
             const fullPath = window.location.pathname + window.location.search + window.location.hash;
-            window.location.replace('/life-organizer/#' + fullPath);
+            const cleanPath = fullPath.replace(/^\/life-organizer/, '') || '/';
+            window.location.replace('/life-organizer/#' + cleanPath);
         </script>
     </head>
     <body>
