@@ -678,13 +678,12 @@ dialog::backdrop {
 .mainContentTasks {
     justify-content: space-between;
     align-items: center;
-    width: clamp(230px, 25%, 25%);
+    width: clamp(230px, 100%, 25%);
 }
 
 .mainContentStatistics {
     display: flex;
     flex-direction: column;
-    max-width: 130px;
     align-items: end;
     padding-right: 5px;
     gap: 15px;

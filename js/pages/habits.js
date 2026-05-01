@@ -63,16 +63,15 @@ function addHabit(){
 function deleteHabit(){
     const btn = document.querySelectorAll('.deleteHabit');
     btn.forEach((e) => {
-        e.addEventListener('click', (el) => {
+        e.addEventListener('click', () => {
             const result = confirm('Вы уверены что хотите удалить привычку?');
             if (result) {
-            habits = habits.filter(habit => habit.id !== Number(el.target.dataset.id)
-        );
-        renderHabitsBlock();
-    }
-    return;
-    });
-  })
+            habits = habits.filter(habit => habit.id !== Number(e.dataset.id));
+            renderHabitsBlock();
+            }
+            return;
+        });
+    })
 }
 
 export function initHistory(habit){

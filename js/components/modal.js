@@ -43,8 +43,8 @@ export function addTask(){
         tasks = saved ? JSON.parse(saved) : [];
         tasks.push(task.getTask());
         localStorage.setItem('tasks', JSON.stringify(tasks));
-        if(window.location.pathname === '/') renderStatistics();
-        if(window.location.pathname === '/tasks') renderTasksBlock();
+        if(window.location.pathname === '/life-organizer') renderStatistics();
+        if(window.location.pathname === '/life-organizer/tasks') renderTasksBlock();
         taskForm.reset();
     });
 }
