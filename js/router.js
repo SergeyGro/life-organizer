@@ -5,10 +5,10 @@ import about from './pages/about.js';
 import { currentLink } from './components/menu.js';
 
 const routes = {
-    '/': renderHome(),
-    '/tasks': renderTasks(),
-    '/habits': renderHabits(),
-    '/about': about
+    '/life-organizer': renderHome(),
+    '/life-organizer/tasks': renderTasks(),
+    '/life-organizer/habits': renderHabits(),
+    '/life-organizer/about': about
 }
 
 function renderRoute(path) {
@@ -19,13 +19,13 @@ function renderRoute(path) {
     const app = document.getElementById('app');
     if (routes[normalizedPath]) {
         app.innerHTML = routes[normalizedPath];
-        if (normalizedPath === '/'){
+        if (normalizedPath === '/life-organizer/'){
             initHome();
         }
-        if (normalizedPath === '/tasks'){
+        if (normalizedPath === '/life-organizer/tasks'){
             initTasks();
         }
-        if (normalizedPath === '/habits'){
+        if (normalizedPath === '/life-organizer/habits'){
             initHabits();
         }
     } else {

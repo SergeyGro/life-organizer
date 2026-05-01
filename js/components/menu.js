@@ -6,10 +6,10 @@ const menu =`
     <nav class="navHeader ${statusMenu ? 'openMenu' : ''}">
         <button class="menuBtn openMenuBtn"><i class="fas fa-times"></i></button>
         <ul class="ulNav">
-            <li><a href="/" class="aNav"><i class="fas fa-home"></i> Главная</a></li>
-            <li><a href="/tasks" class="aNav"><i class="fas fa-check-square"></i> Задачи</a></li>
-            <li><a href="/habits" class="aNav"><i class="fas fa-fire"></i> Привычки</a></li>
-            <li><a href="/about" class="aNav"><i class="fas fa-info-circle"></i> Информация</a></li>
+            <li><a href="/life-organizer" class="aNav"><i class="fas fa-home"></i> Главная</a></li>
+            <li><a href="/life-organizer/tasks" class="aNav"><i class="fas fa-check-square"></i> Задачи</a></li>
+            <li><a href="/life-organizer/habits" class="aNav"><i class="fas fa-fire"></i> Привычки</a></li>
+            <li><a href="/life-organizer/about" class="aNav"><i class="fas fa-info-circle"></i> Информация</a></li>
         </ul>
     </nav>
     <div class="clickArea"></div>`;
