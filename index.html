@@ -27,12 +27,16 @@
         (function() {
             const match = window.location.hash.match(/^#\/(.*)$/);
             if (match) {
-                const newPath = match[1];
-                window.history.replaceState(null, null, '/' + newPath);
+                let fullPath = match[1];
+                const basePath = '/life-organizer';
+                if (fullPath.startsWith(basePath)) {
+                    fullPath = fullPath.slice(basePath.length) || '/';
+                }
+                window.history.replaceState(null, null, basePath + fullPath);
             }
         })();
     </script>
-    
+
     <script type="module" src="js/app.js"></script>
 </body>
 </html>

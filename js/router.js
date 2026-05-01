@@ -4,18 +4,26 @@ import { renderHabits, initHabits } from './pages/habits.js';
 import about from './pages/about.js';
 import { currentLink } from './components/menu.js';
 
+const basePath = '/life-organizer';
+
 const routes = {
-    '/life-organizer': renderHome(),
-    '/life-organizer/tasks': renderTasks(),
-    '/life-organizer/habits': renderHabits(),
-    '/life-organizer/about': about
+    '/': renderHome(),
+    '/tasks': renderTasks(),
+    '/habits': renderHabits(),
+    '/about': about
+}
+
+function normalizePath(path) {
+    if (path === basePath) return '/';
+    if (path.startsWith(basePath + '/')) {
+        return path.slice(basePath.length);
+    }
+    return path;
 }
 
 function renderRoute(path) {
-    let normalizedPath = path;
-    if (normalizedPath !== '/' && normalizedPath.endsWith('/')) {
-        normalizedPath = normalizedPath.slice(0, -1);
-    }
+    const normalizedPath = normalizePath(path);
+    const render = routes[normalizedPath];
     const app = document.getElementById('app');
     if (routes[normalizedPath]) {
         app.innerHTML = routes[normalizedPath];

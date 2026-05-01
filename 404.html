@@ -2,13 +2,10 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Single Page App</title>
+        <title>Life organizer</title>
         <script type="text/javascript">
-            const path = window.location.pathname;
-            const search = window.location.search;
-            const hash = window.location.hash;
-            const redirectPath = path + search + hash;
-            window.location.replace('/#' + redirectPath);
+            const fullPath = window.location.pathname + window.location.search + window.location.hash;
+            window.location.replace('/life-organizer/#' + fullPath);
         </script>
     </head>
     <body>
