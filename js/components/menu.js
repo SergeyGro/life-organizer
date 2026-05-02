@@ -66,13 +66,7 @@ function menuBurger(){
 export function currentLink(){
     header.querySelectorAll('a').forEach(link => {
         let href = link.getAttribute('href');
-        if (href === '/life-organizer' || href === '/life-organizer/') href = '/';
-        if (href.startsWith('/life-organizer' + '/')) {
-            href = href.slice('/life-organizer'.length);
-        }
-
-        console.log(href, window.location.pathname)
-        if (href === window.location.pathname){
+        if (href === window.location.pathname || href + '/' === window.location.pathname){
             link.classList.add('active');
         } else {
             link.classList.remove('active');
