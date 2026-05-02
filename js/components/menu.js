@@ -68,7 +68,7 @@ export function currentLink(){
         let href = link.getAttribute('href');
         if (href === '/life-organizer' || href === '/life-organizer/') href = '/';
         if (href.startsWith('/life-organizer' + '/')) {
-            href = path.slice('/life-organizer'.length);
+            href = href.slice('/life-organizer'.length);
         }
         if (href === window.location.pathname){
             link.classList.add('active');
