@@ -70,6 +70,8 @@ export function currentLink(){
         if (href.startsWith('/life-organizer' + '/')) {
             href = href.slice('/life-organizer'.length);
         }
+
+        console.log(href, window.location.pathname)
         if (href === window.location.pathname){
             link.classList.add('active');
         } else {
